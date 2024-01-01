@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34322.80
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beauty", "Beauty\Beauty.csproj", "{E098AEAB-EDC3-4DF5-B410-DC63618EE09A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beauty.Admin", "Beauty.Admin\Beauty.Admin.csproj", "{ABE3AF63-8C06-4EE1-8483-039F7507933D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E098AEAB-EDC3-4DF5-B410-DC63618EE09A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E098AEAB-EDC3-4DF5-B410-DC63618EE09A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E098AEAB-EDC3-4DF5-B410-DC63618EE09A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E098AEAB-EDC3-4DF5-B410-DC63618EE09A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABE3AF63-8C06-4EE1-8483-039F7507933D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABE3AF63-8C06-4EE1-8483-039F7507933D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABE3AF63-8C06-4EE1-8483-039F7507933D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABE3AF63-8C06-4EE1-8483-039F7507933D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {128325D4-40B8-4E2B-BBAC-FF5C162B61DB}
+	EndGlobalSection
+EndGlobal
