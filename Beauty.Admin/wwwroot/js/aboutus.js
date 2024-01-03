@@ -31,6 +31,7 @@
     loadData();
     function Clear() {
         $('form#aboutusForm').trigger("reset");
+        $('#ID').val(0);
     }
     function editAbout(id) {
         $.ajax({
