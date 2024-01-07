@@ -27,6 +27,7 @@ namespace Beauty.Admin.Controllers
         {
             return View("/views/beauty/aboutus.cshtml");
         }
+        [HttpGet]
         [Route("Aboutus")]
         public async Task<IActionResult> AboutUs(int id = 0)
         {
@@ -42,28 +43,28 @@ namespace Beauty.Admin.Controllers
         }
         [HttpPost]
         [Route("Aboutus")]
-        public async Task<IActionResult> Aboutus([FromBody] Aboutus aboutus)
-        {
-            try
+         public async Task<IActionResult> AboutUs([FromBody] Aboutus aboutus, [FromBody] IFormFile file)
             {
-                if (aboutus != null)
+                try
                 {
-                    await _manageBeauty.Aboutus(aboutus);
-                    return Ok(aboutus.ID == 0 ? new { Message = "Aboutus Added succesfully !!!" } : new { Message = "Aboutus Updated succesfully !!!" });
+                    if (aboutus != null)
+                    {
+                        await _manageBeauty.Aboutus(aboutus);
+                        return Ok(aboutus.ID == 0 ? new { Message = "Aboutus Added succesfully !!!" } : new { Message = "Aboutus Updated succesfully !!!" });
+
+                    }
+                    else
+                    {
+                        return Ok(new { Message = "Data not found  !!!" });
+
+                    }
 
                 }
-                else
+                catch (Exception ex)
                 {
-                    return Ok(new { Message = "Data not found  !!!" });
-
+                    return View("/views/shared/error.cshtml", ex);
                 }
-
             }
-            catch (Exception ex)
-            {
-                return View("/views/shared/error.cshtml", ex);
-            }
-        }
         [HttpGet]
         [Route("DeleteAbout")]
         public async Task<IActionResult> DeleteAbout(int id)
