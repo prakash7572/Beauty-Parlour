@@ -231,7 +231,7 @@ namespace Beauty.Admin
                 cmd.Parameters.AddWithValue("SubTitle", service.SubTitle);
                 cmd.Parameters.AddWithValue("Image", service.Image);
                 cmd.Parameters.AddWithValue("Description", service.Description);
-                cmd.Parameters.AddWithValue("QueryType", service.ID == 0 ? "ADD_CONTACTS" : "UPDATE_CONTACTS");
+                cmd.Parameters.AddWithValue("QueryType", service.ID == 0 ? "ADD_SERVICES" : "UPDATE_SERVICES");
                 cmd.ExecuteNonQuery();
                 return service;
 
@@ -250,7 +250,7 @@ namespace Beauty.Admin
                 cmd = new SqlCommand("Beauty_SP", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("ID", id);
-                cmd.Parameters.AddWithValue("QueryType", "DELETE_CONTACTS");
+                cmd.Parameters.AddWithValue("QueryType", "DELETE_SERVICES");
                 cmd.ExecuteNonQuery();
                 return id;
             }

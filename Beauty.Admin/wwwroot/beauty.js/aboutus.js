@@ -1,5 +1,4 @@
 //...............Start Aboutus.................//
-loadData();
     function loadData() {
         $.ajax({
             url: "/beauty/aboutus",
@@ -28,7 +27,7 @@ loadData();
             }
         });
     }
-    loadData();
+loadData();
     function Clear() {
         $('form#aboutusForm').trigger("reset");
         $('#ID').val(0);
