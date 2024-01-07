@@ -9,17 +9,17 @@ function loadData() {
             $.each(result, function (key, item) {
                 html += '<tr>';
                 html += `<td>${key + 1}</td>`;
-                html += `<td>${item.subTitle}</td>`;
-                html += `<td>${item.address}</td>`;
-                html += `<td>${item.email}</td>`;
-                html += `<td>${item.phone}</td>`;
+                html += `<td>${item.SubTitle}</td>`;
+                html += `<td>${item.Address}</td>`;
+                html += `<td>${item.Email}</td>`;
+                html += `<td>${item.Phone}</td>`;
                 html += `<td>
-                                 <a href="#" data-toggle="modal" data-target="#rightSideModal" onclick="GetContact(${item.id})"><i class="fa fa-edit"></i></a>
-                                 <a href="#" onclick="DelContact(${item.id})"><i class="fa fa-trash"></i></a>
+                                 <a href="#" data-toggle="modal" data-target="#rightSideModal" onclick="GetContact(${item.ID})"><i class="fa fa-edit"></i></a>
+                                 <a href="#" onclick="DelContact(${item.ID})"><i class="fa fa-trash"></i></a>
                                  </td>`;
                 html += '</tr>';
             });
-            $('#contactlist').html(html);
+            $('#list').html(html);
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -38,11 +38,11 @@ function GetContact(id) {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            $("#Phone").val(result[0].phone);
-            $("#SubTitle").val(result[0].subTitle);
-            $("#Email").val(result[0].email);
-            $("#Address").val(result[0].address);
-            $("#ID").val(result[0].id);
+            $("#Phone").val(result[0].Phone);
+            $("#SubTitle").val(result[0].SubTitle);
+            $("#Email").val(result[0].Email);
+            $("#Address").val(result[0].Address);
+            $("#ID").val(result[0].ID);
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
@@ -78,7 +78,7 @@ function DelContact(id) {
         return false;
     } else {
         $.ajax({
-            url: `/beauty/deletecontact?id=${id}`,
+            url: `/beauty/deletecontactus?id=${id}`,
             type: "GET",
             contentType: "application/json;charset=UTF-8",
             dataType: "json",

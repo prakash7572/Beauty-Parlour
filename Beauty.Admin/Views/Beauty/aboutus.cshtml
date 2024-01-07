@@ -1,5 +1,5 @@
 ﻿<script src="~/js/jquery-3.7.0.min.js" asp-append-version="true"></script>
-<script src="~/js/aboutus.js" asp-append-version="true"></script>
+<script src="~/beauty.js/aboutus.js" asp-append-version="true"></script>
 
 <div class="card" style="width: 58rem;margin-left:70px">
     <div class="card-body">
@@ -11,7 +11,7 @@
                 <a href="#" class="btn btn-primary text-end font-family" onclick="Clear()" data-toggle="modal" data-target="#rightSideModal">Add</a>
             </div>
         </div>
-        <table class="table table-bordered table-hover mt-3">
+        <table class="table table-bordered table-hover mt-3 DataTable">
             <thead>
                 <tr style="background-color:lightgray;text-align:center">
                     <th scope="col">#</th>
@@ -22,8 +22,7 @@
                     <th scope="col">Action</th>
                 </tr>
             </thead>
-            <tbody id="aboutlist" style="text-align:center">
-               
+            <tbody id="list" style="text-align:center">
             </tbody>
         </table>
     </div>

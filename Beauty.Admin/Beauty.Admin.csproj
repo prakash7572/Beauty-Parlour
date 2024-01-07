@@ -13,10 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\js\banner.js" />
-    <None Include="wwwroot\js\makeup.js" />
-    <None Include="wwwroot\js\price.js" />
-    <None Include="wwwroot\js\aboutus.js" />
+    <None Include="wwwroot\beauty.js\banner.js" />
+    <None Include="wwwroot\beauty.js\makeup.js" />
+    <None Include="wwwroot\beauty.js\price.js" />
+    <None Include="wwwroot\beauty.js\aboutus.js" />
   </ItemGroup>
 
   <ItemGroup>

@@ -9,17 +9,17 @@
                 $.each(result, function (key, item) {
                     html += '<tr>';
                     html += `<td>${key + 1}</td>`;
-                    html += `<td>${item.title}</td>`;
-                    html += `<td>${item.subTitle}</td>`;
-                    html += `<td>${item.description}</td>`;
-                    html += `<td>${item.image}</td>`;
+                    html += `<td>${item.Title}</td>`;
+                    html += `<td>${item.SubTitle}</td>`;
+                    html += `<td>${item.Description}</td>`;
+                    html += `<td>${item.Image}</td>`;
                     html += `<td>
-                                     <a href="#" data-toggle="modal" data-target="#rightSideModal" onclick="GetService(${item.id})"><i class="fa fa-edit"></i></a>
-                                     <a href="#" onclick="DelService(${item.id})"><i class="fa fa-trash"></i></a>
+                                     <a href="#" data-toggle="modal" data-target="#rightSideModal" onclick="GetService(${item.ID})"><i class="fa fa-edit"></i></a>
+                                     <a href="#" onclick="DelService(${item.ID})"><i class="fa fa-trash"></i></a>
                                      </td>`;
                     html += '</tr>';
                 });
-                $('#servicelist').html(html);
+                $('#list').html(html);
             },
             error: function (errormessage) {
                 alert(errormessage.responseText);
@@ -30,18 +30,18 @@
     function Clear() {
         $('form#serviceForm').trigger("reset");
     }
-    function GetService(id) {
+    function GetService(ID) {
         $.ajax({
-            url: `/beauty/service?id=${id}`,
+            url: `/beauty/service?ID=${ID}`,
             type: "GET",
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (result) {
-                $("#Title").val(result[0].title);
-                $("#SubTitle").val(result[0].subTitle);
-                $("#Image").val(result[0].image);
-                $("#Description").val(result[0].description);
-                $("#ID").val(result[0].id);
+                $("#Title").val(result[0].Title);
+                $("#SubTitle").val(result[0].SubTitle);
+                $("#Image").val(result[0].Image);
+                $("#Description").val(result[0].Description);
+                $("#ID").val(result[0].ID);
             },
             error: function (errormessage) {
                 alert(errormessage.responseText);
@@ -72,12 +72,12 @@
         });
         return false;
 }
-    function DelService(id) {
+    function DelService(ID) {
     if (!confirm("Are you sure you want to delete this Record?")) {
         return false;
     } else {
         $.ajax({
-            url: `/beauty/deleteservice?id=${id}`,
+            url: `/beauty/deleteservice?ID=${ID}`,
             type: "GET",
             contentType: "application/json;charset=UTF-8",
             dataType: "json",

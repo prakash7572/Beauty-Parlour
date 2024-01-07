@@ -1,5 +1,5 @@
 //...............Start Aboutus.................//
-
+loadData();
     function loadData() {
         $.ajax({
             url: "/beauty/aboutus",
@@ -11,17 +11,17 @@
                 $.each(result, function (key, item) {
                     html += '<tr>';
                     html += `<td>${key + 1}</td>`;
-                    html += `<td>${item.title}</td>`;
-                    html += `<td>${item.subTitle}</td>`;
-                    html += `<td>${item.description}</td>`;
-                    html += `<td>${item.image}</td>`;
+                    html += `<td>${item.Title}</td>`;
+                    html += `<td>${item.SubTitle}</td>`;
+                    html += `<td>${item.Description}</td>`;
+                    html += `<td>${item.Image}</td>`;
                     html += `<td>
-                                 <a href="#" data-toggle="modal" data-target="#rightSideModal" onclick="editAbout(${item.id})"><i class="fa fa-edit"></i></a>
-                                 <a href="#" onclick="delAbout(${item.id})"><i class="fa fa-trash"></i></a>
+                                 <a href="#" data-toggle="modal" data-target="#rightSideModal" onclick="editAbout(${item.ID})"><i class="fa fa-edit"></i></a>
+                                 <a href="#" onclick="delAbout(${item.ID})"><i class="fa fa-trash"></i></a>
                                  </td>`;
                     html += '</tr>';
                 });
-                $('#aboutlist').html(html);
+                $('#list').html(html);
             },
             error: function (errormessage) {
                 alert(errormessage.responseText);
@@ -40,11 +40,11 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (result) {
-                $("#Title").val(result[0].title);
-                $("#SubTitle").val(result[0].subTitle);
-                $("#Image").val(result[0].image);
-                $("#Description").val(result[0].description);
-                $("#ID").val(result[0].id);
+                $("#Title").val(result[0].Title);
+                $("#SubTitle").val(result[0].SubTitle);
+                $("#Image").val(result[0].Image);
+                $("#Description").val(result[0].Description);
+                $("#ID").val(result[0].ID);
             },
             error: function (errormessage) {
                 alert(errormessage.responseText);
@@ -93,5 +93,6 @@
                 }
             });
         };
-    }
+}
+
 //...............End Aboutus.................//
