@@ -27,7 +27,7 @@
             }
         });
     }
-loadData();
+    loadData();
     function Clear() {
         $('form#aboutusForm').trigger("reset");
         $('#ID').val(0);
@@ -50,30 +50,72 @@ loadData();
             }
         });
     }
-    function submitAbout() {
-        var aboutus = {
-            ID: $('#ID').val(),
-            Title: $('#Title').val(),
-            SubTitle: $('#SubTitle').val(),
-            Image: $('#Image').val(),
-            Description: $('#Description').val()
-        };
-        $.ajax({
-            url: "/beauty/aboutus",
-            data: JSON.stringify(aboutus),
-            type: "POST",
-            contentType: "application/json",
-            dataType: "json",
-            success: function (result) {
-                alert(result.message);
-                window.location.href = '/beauty/beautyaboutus';
-            },
-            error: function (errormessage) {
-                alert(errormessage.responseText);
-            }
-        });
-        return false;
-    }
+    //function submitAbout() {
+    //    var aboutus = {
+    //        ID: $('#ID').val(),
+    //        Title: $('#Title').val(),
+    //        SubTitle: $('#SubTitle').val(),
+    //        Image: $('#Image').val(),
+    //        Description: $('#Description').val()
+    //    };
+
+    //    $.ajax({
+    //        url: "/beauty/aboutus",
+    //        data: JSON.stringify(aboutus),
+    //        type: "POST",
+    //        contentType: "application/json",
+    //        dataType: "json",
+    //        success: function (result) {
+    //            alert(result.message);
+    //            window.location.href = '/beauty/beautyaboutus';
+    //        },
+    //        error: function (errormessage) {
+    //            alert(errormessage.responseText);
+    //        }
+    //    });
+    //    return false;
+//}
+
+function submitAbout() {
+    var aboutus = {
+        ID: $('#ID').val(),
+        Title: $('#Title').val(),
+        SubTitle: $('#SubTitle').val(),
+        Image: $('#Image')[0].files[0],
+        // Remove $('#Image').val() for file input
+        Description: $('#Description').val()
+    };
+
+    //var formData = new FormData();
+    //formData.append("ID", aboutus.ID);
+    //formData.append("Title", aboutus.Title);
+    //formData.append("SubTitle", aboutus.SubTitle);
+    //formData.append("Description", aboutus.Description);
+
+    //// Append the file input data if a file is selected
+    //var fileInput = $('#Image')[0].files[0];
+    //if (fileInput) {
+    //    formData.append("Image", fileInput);
+    //}
+    console.log(aboutus);
+    $.ajax({
+        url: "/beauty/aboutus",
+        data: aboutus,
+        type: "POST",
+        contentType: "application/json",
+        processData: false,
+        success: function (result) {
+            alert(result.message);
+            window.location.href = '/beauty/beautyaboutus';
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+    return false;
+}
+
+
     function delAbout(id) {
         if (!confirm("Are you sure you want to delete this Record?")) {
             return false;

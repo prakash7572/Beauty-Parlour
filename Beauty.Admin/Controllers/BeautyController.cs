@@ -41,30 +41,61 @@ namespace Beauty.Admin.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+       
         [HttpPost]
         [Route("Aboutus")]
-         public async Task<IActionResult> AboutUs([FromBody] Aboutus aboutus, [FromBody] IFormFile file)
+        public async Task<IActionResult> AboutUs([FromBody] Aboutus aboutus, [FromForm] IFormFile Image)
             {
-                try
+            try
+            {
+                if (aboutus != null)
                 {
-                    if (aboutus != null)
-                    {
-                        await _manageBeauty.Aboutus(aboutus);
-                        return Ok(aboutus.ID == 0 ? new { Message = "Aboutus Added succesfully !!!" } : new { Message = "Aboutus Updated succesfully !!!" });
+                    // Handle 'aboutus' data
+                    // For example, you can use _manageBeauty.Aboutus(aboutus);
 
-                    }
-                    else
+                    // Handle the file (if provided)
+                    if (Image != null && Image.Length > 0)
                     {
-                        return Ok(new { Message = "Data not found  !!!" });
-
+                       
                     }
 
+                    // Return a response indicating success
+                    return Ok(aboutus.ID == 0 ? new { Message = "Aboutus Added successfully !!!" } : new { Message = "Aboutus Updated successfully !!!" });
                 }
-                catch (Exception ex)
+                else
                 {
-                    return View("/views/shared/error.cshtml", ex);
+                    return Ok(new { Message = "Something went worng  !!!" });
                 }
             }
+            catch (Exception ex)
+            {
+                // Handle exceptions appropriately, for example, return an error response
+                return BadRequest(new { Message = "An error occurred while processing the request.", Error = ex.Message });
+            }
+        }
+
+        //public async Task<IActionResult> AboutUs(string aboutus, [FromBody] IFormFile file)
+        //   {
+        //       try
+        //       {
+        //           if (aboutus != null)
+        //           {
+        //           //await _manageBeauty.Aboutus(aboutus);
+        //           //return Ok(aboutus.ID == 0 ? new { Message = "Aboutus Added succesfully !!!" } : new { Message = "Aboutus Updated succesfully !!!" });
+        //           return null;
+        //           }
+        //           else
+        //           {
+        //               return Ok(new { Message = "Data not found  !!!" });
+
+        //           }
+
+        //       }
+        //       catch (Exception ex)
+        //       {
+        //           return View("/views/shared/error.cshtml", ex);
+        //       }
+        //   }
         [HttpGet]
         [Route("DeleteAbout")]
         public async Task<IActionResult> DeleteAbout(int id)
@@ -208,7 +239,128 @@ namespace Beauty.Admin.Controllers
 
         #endregion
 
+        #region--------Makeup------
+        [Route("BeautyMakeup")]
+        public IActionResult Makeup()
+        {
+            return View("/views/beauty/makeup.cshtml");
+        }
+        [Route("Makeup")]
+        public async Task<IActionResult> Makeup(int? id = 0)
+        {
+            try
+            {
+                IEnumerable<Makeup> makeups = await _manageBeauty.Makeup(id); ;
+                return Content(JsonConvert.SerializeObject(makeups));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpPost]
+        [Route("Makeup")]
+        public async Task<IActionResult> Makeup([FromBody] Makeup makeup)
+        {
+            try
+            {
+                if (makeup != null)
+                {
+                    await _manageBeauty.Makeup(makeup);
+                    return Ok(makeup.ID == 0 ? new { Message = "Makeup Added succesfully !!!" } : new { Message = "Makeup Updated succesfully !!!" });
 
-    
+                }
+                else
+                {
+                    return Ok(new { Message = "Something went wrong !!!" });
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return View("/views/shared/error.cshtml", ex);
+            }
+        }
+        [HttpGet]
+        [Route("DeleteMakeup")]
+        public async Task<IActionResult> DelMakeup(int id)
+        {
+            try
+            {
+                await _manageBeauty.DelMakeup(id);
+                return Ok(new { Message = "Makeup Deleted succesfully !!!" });
+
+            }
+            catch (Exception ex)
+            {
+                return View("/views/shared/error.cshtml", ex);
+            }
+        }
+
+
+        #endregion
+
+        #region--------News------
+        [Route("BeautyNews")]
+        public IActionResult News()
+        {
+            return View("/views/beauty/news.cshtml");
+        }
+        [Route("News")]
+        public async Task<IActionResult> News(int? id = 0)
+        {
+            try
+            {
+                IEnumerable<News> news = await _manageBeauty.News(id); ;
+                return Content(JsonConvert.SerializeObject(news));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpPost]
+        [Route("News")]
+        public async Task<IActionResult> News([FromBody] News news)
+        {
+            try
+            {
+                if (news != null)
+                {
+                    await _manageBeauty.News(news);
+                    return Ok(news.ID == 0 ? new { Message = "News Added succesfully !!!" } : new { Message = "News Updated succesfully !!!" });
+
+                }
+                else
+                {
+                    return Ok(new { Message = "Something went wrong !!!" });
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return View("/views/shared/error.cshtml", ex);
+            }
+        }
+        [HttpGet]
+        [Route("DeleteNews")]
+        public async Task<IActionResult> DelNews(int id)
+        {
+            try
+            {
+                await _manageBeauty.DelNews(id);
+                return Ok(new { Message = "News Deleted succesfully !!!" });
+
+            }
+            catch (Exception ex)
+            {
+                return View("/views/shared/error.cshtml", ex);
+            }
+        }
+
+
+        #endregion
     }
 }

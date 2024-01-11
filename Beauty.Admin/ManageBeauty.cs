@@ -262,6 +262,154 @@ namespace Beauty.Admin
         }
         #endregion
 
+        #region------Makeup------
+        public async Task<IEnumerable<Makeup>> Makeup(int? id)
+        {
+            try
+            {
+                List<Makeup> list = new List<Makeup>();
+                con = new SqlConnection(ConnectionString());
+                cmd = new SqlCommand("Beauty_SP", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("ID", id);
+                cmd.Parameters.AddWithValue("QueryType", id == 0 ? "GET_ALL_MAKEUP" : "GET_MAKEUP");
+                adt = new SqlDataAdapter(cmd);
+                adt.Fill(ds);
+                dt = ds.Tables[0];
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    Makeup makeup = new Makeup();
+                    makeup.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
+                    makeup.Title = dt.Rows[i]["Title"].ToString();
+                    makeup.FaFaImg = dt.Rows[i]["FaFaImg"].ToString();
+                    makeup.Description = dt.Rows[i]["Description"].ToString();
+                    list.Add(makeup);
+                }
+                await con.OpenAsync();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<Makeup> Makeup(Makeup makeup)
+        {
+            try
+            {
+                con = new SqlConnection(ConnectionString());
+                await con.OpenAsync();
+                cmd = new SqlCommand("Beauty_SP", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("ID", makeup.ID);
+                cmd.Parameters.AddWithValue("Title", makeup.Title);
+                cmd.Parameters.AddWithValue("FaFaImg", makeup.FaFaImg);
+                cmd.Parameters.AddWithValue("Description", makeup.Description);
+                cmd.Parameters.AddWithValue("QueryType", makeup.ID == 0 ? "ADD_MAKEUP" : "UPDATE_MAKEUP");
+                cmd.ExecuteNonQuery();
+                return makeup;
 
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<int?> DelMakeup(int? id)
+        {
+            try
+            {
+                con = new SqlConnection(ConnectionString());
+                await con.OpenAsync();
+                cmd = new SqlCommand("Beauty_SP", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("ID", id);
+                cmd.Parameters.AddWithValue("QueryType", "DELETE_MAKEUP");
+                cmd.ExecuteNonQuery();
+                return id;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+        #endregion
+
+        #region-----News------
+        public async Task<IEnumerable<News>> News(int? id)
+        {
+            try
+            {
+                List<News> list = new List<News>();
+                con = new SqlConnection(ConnectionString());
+                cmd = new SqlCommand("Beauty_SP", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("ID", id);
+                cmd.Parameters.AddWithValue("QueryType", id == 0 ? "GET_ALL_NEWS" : "GET_NEWS");
+                adt = new SqlDataAdapter(cmd);
+                adt.Fill(ds);
+                dt = ds.Tables[0];
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    News news = new News();
+                    news.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
+                    news.SubTitle = dt.Rows[i]["SubTitle"].ToString();
+                    news.Image = dt.Rows[i]["Image"].ToString();
+                    news.Description = dt.Rows[i]["Description"].ToString();
+                    news.MakeupType = Convert.ToBoolean(dt.Rows[i]["MakeupType"]);
+                    list.Add(news);
+                }
+                await con.OpenAsync();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<News> News(News news)
+        {
+            try
+            {
+                con = new SqlConnection(ConnectionString());
+                await con.OpenAsync();
+                cmd = new SqlCommand("Beauty_SP", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("ID", news.ID);
+                cmd.Parameters.AddWithValue("SubTitle", news.SubTitle);
+                cmd.Parameters.AddWithValue("Image", news.Image);
+                cmd.Parameters.AddWithValue("Description", news.Description);
+                cmd.Parameters.AddWithValue("MakeupType", news.MakeupType);
+                cmd.Parameters.AddWithValue("QueryType", news.ID == 0 ? "ADD_NEWS" : "UPDATE_NEWS");
+                cmd.ExecuteNonQuery();
+                return news;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<int?> DelNews(int? id)
+        {
+            try
+            {
+                con = new SqlConnection(ConnectionString());
+                await con.OpenAsync();
+                cmd = new SqlCommand("Beauty_SP", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("ID", id);
+                cmd.Parameters.AddWithValue("QueryType", "DELETE_NEWS");
+                cmd.ExecuteNonQuery();
+                return id;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+        #endregion
     }
 }

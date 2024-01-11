@@ -36,7 +36,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-white btn" onclick="OpenMakeup()" href="#" style="background-color:#ee4f48;height:44px">
+                            <a class="nav-link text-white btn" asp-area="" asp-controller="Beauty" asp-action="BeautyMakeup" style="background-color:#ee4f48;height:44px">
                                 <i class="fa fa-paint-brush" aria-hidden="true" style="font-size: 28px; color:white;"></i> <span>Maekup</span>
                             </a>
                         </li>
@@ -98,7 +98,7 @@
                             <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenHome()" href="#"><i class="fa fa-home" style="font-size:28px;color:white"></i>    Home </a></li>
                             <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenAbout()" href="#"><i class="fa fa-info-circle" style="font-size:28px;color:white"></i>    About </a></li>
                             <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenService()" href="#"><i class="fa fa-wrench" aria-hidden="true" style="font-size:28px;color:white"></i>  Services</a></li>
-                            <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenNews()" href="#"><i class="fas fa-blog" style="font-size: 28px; color: white;"></i>  News</a></li>
+                            <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenNews()" href="#"><i class="fa fa-newspaper-o" style="font-size: 28px; color: white;"></i>  News</a></li>
                             <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenContact()" href="#"><i class="fa fa-address-book" aria-hidden="true" style="font-size: 28px; color: white;"></i> Contact</a></li>
                             <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenPrice()" href="#"><i class="fa fa-money" aria-hidden="true" style="font-size: 28px; color: white;"></i> Price</a></li>
                             @* <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenMakeup()" href="#"><i class="fa fa-paint-brush" aria-hidden="true" style="font-size: 28px; color: white;"></i> Maekup</a></li> *@
@@ -121,7 +121,7 @@
             &copy; 2023 - Beauty.Admin - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script src="~/js/jquery-3.6.4.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery-3.7.0.min.js" asp-append-version="true"></script>
     <script src="~/js/jquery.dataTables.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

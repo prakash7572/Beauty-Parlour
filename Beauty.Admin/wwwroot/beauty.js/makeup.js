@@ -11,12 +11,12 @@
                 $.each(result, function (key, item) {
                     html += '<tr>';
                     html += `<td>${key + 1}</td>`;
-                    html += `<td>${item.title}</td>`;
-                    html += `<td>${item.faFaImg}</td>`;
-                    html += `<td>${item.description}</td>`;
+                    html += `<td>${item.Title}</td>`;
+                    html += `<td>${item.FaFaImg}</td>`;
+                    html += `<td>${item.Description}</td>`;
                     html += `<td>
-                                 <a href="#" data-toggle="modal" data-target="#rightSideModal" onclick="GetMakeup(${item.id})"><i class="fa fa-edit"></i></a>
-                                 <a href="#" onclick="DelMakeup(${item.id})"><i class="fa fa-trash"></i></a>
+                                 <a href="#" data-toggle="modal" data-target="#rightSideModal" onclick="GetMakeup(${item.ID})"><i class="fa fa-edit"></i></a>
+                                 <a href="#" onclick="DelMakeup(${item.ID})"><i class="fa fa-trash"></i></a>
                                  </td>`;
                     html += '</tr>';
                 });
@@ -39,10 +39,10 @@ function GetMakeup(id) {
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (result) {
-                $("#Title").val(result[0].title);
-                $("#Fa-Fa-Icon").val(result[0].faFaImg);
-                $("#Description").val(result[0].description);
-                $("#ID").val(result[0].id);
+                $("#Title").val(result[0].Title);
+                $("#Fa-Fa-Icon").val(result[0].FaFaImg);
+                $("#Description").val(result[0].Description);
+                $("#ID").val(result[0].ID);
             },
             error: function (errormessage) {
                 alert(errormessage.responseText);
