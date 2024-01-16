@@ -6,6 +6,8 @@ using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using System.Reflection;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Beauty.Admin.Controllers
 {
@@ -13,10 +15,12 @@ namespace Beauty.Admin.Controllers
     public class BeautyController : Controller
     {
         #region---Reference-----
+        private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly ManageBeauty _manageBeauty;
-        public BeautyController(ManageBeauty manageBeauty)
+        public BeautyController(ManageBeauty manageBeauty,IWebHostEnvironment webHostEnvironment)
         {
             _manageBeauty = manageBeauty;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         #endregion
@@ -44,58 +48,57 @@ namespace Beauty.Admin.Controllers
        
         [HttpPost]
         [Route("Aboutus")]
-        public async Task<IActionResult> AboutUs([FromBody] Aboutus aboutus, [FromForm] IFormFile Image)
-            {
+        public async Task<IActionResult> AboutUs([FromForm] Aboutus aboutus)
+        {
             try
             {
                 if (aboutus != null)
                 {
-                    // Handle 'aboutus' data
-                    // For example, you can use _manageBeauty.Aboutus(aboutus);
+                    //var location = new Uri($"{Request.Scheme}://{Request.Host}");
+                    var files = HttpContext.Request.Form.Files;
 
-                    // Handle the file (if provided)
-                    if (Image != null && Image.Length > 0)
+                    if(files != null)
                     {
-                       
-                    }
+                        foreach (var Image in files)
+                        {
+                            if (Image != null && Image.Length > 0)
+                            {
+                                var file = Image;
+                                var uploads = Path.Combine(_webHostEnvironment.WebRootPath, "Content\\Image\\");
+                                if (!Directory.Exists(uploads))
+                                {
+                                    Directory.CreateDirectory(uploads);
+                                }
+                                if (file.Length > 0)
+                                {
+                                    string guid = Guid.NewGuid().ToString("N");
+                                    string fixedGuid = guid.Substring(0, 20);
+                                    var fileName =  fixedGuid + Path.GetExtension(file.FileName);
+                                    using (var fileStream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
+                                    {
+                                        await file.CopyToAsync(fileStream);
+                                        aboutus.Image = fileName;
+                                    }
+                                }
+                            }
+                        }
 
-                    // Return a response indicating success
+                    }
+                    await _manageBeauty.Aboutus(aboutus);
                     return Ok(aboutus.ID == 0 ? new { Message = "Aboutus Added successfully !!!" } : new { Message = "Aboutus Updated successfully !!!" });
                 }
                 else
                 {
-                    return Ok(new { Message = "Something went worng  !!!" });
+                    return Ok(new { Message = "Something went wrong !!!" });
                 }
             }
             catch (Exception ex)
             {
-                // Handle exceptions appropriately, for example, return an error response
-                return BadRequest(new { Message = "An error occurred while processing the request.", Error = ex.Message });
+                return View("/views/shared/error.cshtml", ex);
             }
         }
 
-        //public async Task<IActionResult> AboutUs(string aboutus, [FromBody] IFormFile file)
-        //   {
-        //       try
-        //       {
-        //           if (aboutus != null)
-        //           {
-        //           //await _manageBeauty.Aboutus(aboutus);
-        //           //return Ok(aboutus.ID == 0 ? new { Message = "Aboutus Added succesfully !!!" } : new { Message = "Aboutus Updated succesfully !!!" });
-        //           return null;
-        //           }
-        //           else
-        //           {
-        //               return Ok(new { Message = "Data not found  !!!" });
 
-        //           }
-
-        //       }
-        //       catch (Exception ex)
-        //       {
-        //           return View("/views/shared/error.cshtml", ex);
-        //       }
-        //   }
         [HttpGet]
         [Route("DeleteAbout")]
         public async Task<IActionResult> DeleteAbout(int id)

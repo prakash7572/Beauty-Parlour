@@ -36,7 +36,7 @@
                 </button>
             </div>
             <div class="modal-body">
-            <form id="aboutusForm" onsubmit="return submitAbout()" enctype="multipart/form-data">
+                <form id="aboutusForm" onsubmit="return submitAbout()" method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-md-4">
                         <span for="Title">Title</span><span class="text-danger">*</span>
@@ -48,7 +48,7 @@
                         </div>
                         <div class="col-md-4">
                             <span for="Image">Image</span><span class="text-danger">*</span>
-                            <input type="file" id="Image" name="Image" class="form-control" required title="" autocomplete="off" />
+                            <input type="file" id="Image" name="Image" class="form-control" accept="image/*" required title="" autocomplete="off" />
                         </div>
                         <textarea id="Description" name="Description" style="resize:none;width: 96%;margin-left: 16px;margin-top: 15px;border:1px solid #ced4da" required title=""></textarea>
                 </div>

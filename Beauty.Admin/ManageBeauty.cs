@@ -79,7 +79,7 @@ namespace Beauty.Admin
                 cmd.Parameters.AddWithValue("SubTitle", aboutus.SubTitle);
                 cmd.Parameters.AddWithValue("Image", aboutus.Image);
                 cmd.Parameters.AddWithValue("Description", aboutus.Description);
-                cmd.Parameters.AddWithValue("QueryType", aboutus.ID == 0 ? "ADD_ABOUTUS" : "GET_ABOUTUS");
+                cmd.Parameters.AddWithValue("QueryType", aboutus.ID == 0 ? "ADD_ABOUTUS" : "UPDATE_ABOUTUS");
                 cmd.ExecuteNonQuery();
                 return aboutus;
 

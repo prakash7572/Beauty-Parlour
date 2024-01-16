@@ -13,9 +13,9 @@
                     html += `<td>${item.Title}</td>`;
                     html += `<td>${item.SubTitle}</td>`;
                     html += `<td>${item.Description}</td>`;
-                    html += `<td>${item.Image}</td>`;
+                    html += `<td><img src="https://localhost:44310/Content/Image/${item.Image}" widht="40" height="40" />'</td>`;
                     html += `<td>
-                                 <a href="#" data-toggle="modal" data-target="#rightSideModal" onclick="editAbout(${item.ID})"><i class="fa fa-edit"></i></a>
+                                 <a href="#" data-toggle="modal" data-target="#rightSideModal" onclick="GetAbout(${item.ID})"><i class="fa fa-edit"></i></a>
                                  <a href="#" onclick="delAbout(${item.ID})"><i class="fa fa-trash"></i></a>
                                  </td>`;
                     html += '</tr>';
@@ -32,7 +32,7 @@
         $('form#aboutusForm').trigger("reset");
         $('#ID').val(0);
     }
-    function editAbout(id) {
+function GetAbout(id) {
         $.ajax({
             url: `/beauty/aboutus?id=${id}`,
             type: "GET",
@@ -81,28 +81,26 @@ function submitAbout() {
         ID: $('#ID').val(),
         Title: $('#Title').val(),
         SubTitle: $('#SubTitle').val(),
-        Image: $('#Image')[0].files[0],
         // Remove $('#Image').val() for file input
         Description: $('#Description').val()
     };
 
-    //var formData = new FormData();
-    //formData.append("ID", aboutus.ID);
-    //formData.append("Title", aboutus.Title);
-    //formData.append("SubTitle", aboutus.SubTitle);
-    //formData.append("Description", aboutus.Description);
+    var data = new FormData();
+    data.append("ID", aboutus.ID);
+    data.append("Title", aboutus.Title);
+    data.append("SubTitle", aboutus.SubTitle);
+    data.append("Description", aboutus.Description);
 
-    //// Append the file input data if a file is selected
-    //var fileInput = $('#Image')[0].files[0];
-    //if (fileInput) {
-    //    formData.append("Image", fileInput);
-    //}
-    console.log(aboutus);
+    // Append the file input data if a file is selected
+    var fileInput = $('#Image')[0].files[0];
+    if (fileInput) {
+        data.append("Image", fileInput);
+    }
     $.ajax({
         url: "/beauty/aboutus",
-        data: aboutus,
+        data: data,
         type: "POST",
-        contentType: "application/json",
+        contentType: false,
         processData: false,
         success: function (result) {
             alert(result.message);
