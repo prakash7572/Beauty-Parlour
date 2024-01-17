@@ -11,14 +11,14 @@
                 $.each(result, function (key, item) {
                     html += '<tr>';
                     html += `<td>${key + 1}</td>`;
-                    html += `<td>${item.subTitle}</td>`;
-                    html += `<td>${item.makeup}</td>`;
-                    html += `<td>${item.description}</td>`;
-                    html += `<td>${item.prices}</td>`;
+                    html += `<td>${item.SubTitle}</td>`;
+                    html += `<td>${item.Makeup}</td>`;
+                    html += `<td>${item.Description}</td>`;
+                    html += `<td>${item.Prices}</td>`;
                     html += `<td>
-                                 <a href="#" data-toggle="modal" data-target="#rightSideModal" onclick="GetPrice(${item.id})"><i class="fa fa-edit"></i></a>
-                                 <a href="#" onclick="DelPrice(${item.id})"><i class="fa fa-trash"></i></a>
-                                 </td>`;
+                             <a href="#" data-toggle="modal" data-target="#rightSideModal" onclick="GetPrice(${item.ID})"><i class="fa fa-edit"></i></a>
+                             <a href="#" onclick="DelPrice(${item.ID})"><i class="fa fa-trash"></i></a>
+                             </td>`;
                     html += '</tr>';
                 });
                 $('#pricelist').html(html);
@@ -40,11 +40,11 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (result) {
-                $("#Price").val(result[0].prices);
-                $("#SubTitle").val(result[0].subTitle);
-                $("#Makeup").val(result[0].makeup);
-                $("#Description").val(result[0].description);
-                $("#ID").val(result[0].id);
+                $("#Price").val(result[0].Prices);
+                $("#SubTitle").val(result[0].SubTitle);
+                $("#Makeup").val(result[0].Makeup);
+                $("#Description").val(result[0].Description);
+                $("#ID").val(result[0].ID);
             },
             error: function (errormessage) {
                 alert(errormessage.responseText);

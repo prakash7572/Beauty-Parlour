@@ -1,5 +1,6 @@
 //...............Start banner.................//
-
+var style = `style="font-size:20px"`;
+var url = window.location.origin;
     function loadData() {
         $.ajax({
             url: "/beauty/banner",
@@ -11,11 +12,11 @@
                 $.each(result, function (key, item) {
                     html += '<tr>';
                     html += `<td>${key + 1}</td>`;
-                    html += `<td>${item.title}</td>`;
-                    html += `<td>${item.image}</td>`;
+                    html += `<td>${item.Title}</td>`;
+                    html += `<td><img src="${url}/Content/Image/${item.Image}" widht="40" height="30" /></td>`;
                     html += `<td>
                                  <a href="#" data-toggle="modal" data-target="#rightSideModal" onclick="GetBanner(${item.id})"><i class="fa fa-edit"></i></a>
-                                 <a href="#" onclick="DelBanner(${item.id})"><i class="fa fa-trash"></i></a>
+                                 <a href="#" onclick="DelBanner(${item.ID})"><i class="fa fa-trash"></i></a>
                                  </td>`;
                     html += '</tr>';
                 });
@@ -38,27 +39,33 @@ function GetBanner(id) {
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (result) {
-                $("#Title").val(result[0].title);                
-                $("#Image").val(result[0].image);
-                $("#ID").val(result[0].id);
+                $("#Title").val(result[0].Title);
+                $("#Img").val(result[0].Image);
+                $("#ID").val(result[0].ID);
             },
             error: function (errormessage) {
                 alert(errormessage.responseText);
             }
         });
     }
-function submitBanner() {
-        var banner = {
-            ID: $('#ID').val(),
-            Title: $('#Title').val(),
-            Image: $('#Image').val(),
-        };
+function SubmitBanner() {
+
+    var data = new FormData();
+    data.append("ID", $('#ID').val());
+    data.append("Title", $('#Title').val());
+
+    let fileInput = $("#Image")[0].files[0];
+    if (fileInput) {
+        data.append("Image", fileInput);
+    } else {
+        data.append("Image", $("#Img").val());
+    }
         $.ajax({
             url: "/beauty/banner",
-            data: JSON.stringify(banner),
+            data: data,
             type: "POST",
-            contentType: "application/json",
-            dataType: "json",
+            contentType: false,
+            processData: false,
             success: function (result) {
                 alert(result.message);
                 window.location.href = '/beauty/beautybanner';

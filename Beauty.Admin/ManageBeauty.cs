@@ -2,6 +2,8 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.Xml.Linq;
+using NuGet.Protocol.Plugins;
 
 
 namespace Beauty.Admin
@@ -32,6 +34,12 @@ namespace Beauty.Admin
             return _configuration.GetConnectionString("ConnectionString");
         }
 
+        public void GetConnection(out SqlCommand cmd, out SqlConnection con)
+        {
+            con = new SqlConnection(ConnectionString());
+            cmd = new SqlCommand("Beauty_SP", con);
+        }
+
         #endregion
 
         #region------Aboutus---------
@@ -40,8 +48,7 @@ namespace Beauty.Admin
             try
             {
                 List<Aboutus> list = new List<Aboutus>();
-                con = new SqlConnection(ConnectionString());
-                cmd = new SqlCommand("Beauty_SP", con);
+                GetConnection(out cmd, out con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("ID", id);
                 cmd.Parameters.AddWithValue("QueryType", id == 0 ? "GET_ALL_ABOUTUS" : "GET_ABOUTUS");
@@ -70,9 +77,8 @@ namespace Beauty.Admin
         {
             try
             {
-                con = new SqlConnection(ConnectionString());
+                GetConnection(out cmd, out con);
                 await con.OpenAsync();
-                cmd = new SqlCommand("Beauty_SP", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("ID", aboutus.ID);
                 cmd.Parameters.AddWithValue("Title", aboutus.Title);
@@ -93,9 +99,8 @@ namespace Beauty.Admin
         {
             try
             {
-                con = new SqlConnection(ConnectionString());
                 await con.OpenAsync();
-                cmd = new SqlCommand("Beauty_SP", con);
+                GetConnection(out cmd, out con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("ID", id);
                 cmd.Parameters.AddWithValue("QueryType","DELETE_ABOUTUS");
@@ -116,8 +121,7 @@ namespace Beauty.Admin
             try
             {
                 List<Contactus> list = new List<Contactus>();
-                con = new SqlConnection(ConnectionString());
-                cmd = new SqlCommand("Beauty_SP", con);
+                GetConnection(out cmd, out con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("ID", id);
                 cmd.Parameters.AddWithValue("QueryType", id == 0 ? "GET_ALL_CONTACTS" : "GET_CONTACTS");
@@ -146,9 +150,8 @@ namespace Beauty.Admin
         {
             try
             {
-                con = new SqlConnection(ConnectionString());
+                GetConnection(out cmd, out con);
                 await con.OpenAsync();
-                cmd = new SqlCommand("Beauty_SP", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("ID", contactus.ID);
                 cmd.Parameters.AddWithValue("Phone", contactus.Phone);
@@ -169,9 +172,8 @@ namespace Beauty.Admin
         {
             try
             {
-                con = new SqlConnection(ConnectionString());
+                GetConnection(out cmd, out con);
                 await con.OpenAsync();
-                cmd = new SqlCommand("Beauty_SP", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("ID", id);
                 cmd.Parameters.AddWithValue("QueryType", "DELETE_CONTACTS");
@@ -192,8 +194,7 @@ namespace Beauty.Admin
             try
             {
                 List<Service> list = new List<Service>();
-                con = new SqlConnection(ConnectionString());
-                cmd = new SqlCommand("Beauty_SP", con);
+                GetConnection(out cmd, out con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("ID", id);
                 cmd.Parameters.AddWithValue("QueryType", id == 0 ? "GET_ALL_SERVICES" : "GET_SERVICES");
@@ -222,9 +223,8 @@ namespace Beauty.Admin
         {
             try
             {
-                con = new SqlConnection(ConnectionString());
+                GetConnection(out cmd, out con);
                 await con.OpenAsync();
-                cmd = new SqlCommand("Beauty_SP", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("ID", service.ID);
                 cmd.Parameters.AddWithValue("Title", service.Title);
@@ -245,9 +245,8 @@ namespace Beauty.Admin
         {
             try
             {
-                con = new SqlConnection(ConnectionString());
+                GetConnection(out cmd, out con);
                 await con.OpenAsync();
-                cmd = new SqlCommand("Beauty_SP", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("ID", id);
                 cmd.Parameters.AddWithValue("QueryType", "DELETE_SERVICES");
@@ -268,8 +267,7 @@ namespace Beauty.Admin
             try
             {
                 List<Makeup> list = new List<Makeup>();
-                con = new SqlConnection(ConnectionString());
-                cmd = new SqlCommand("Beauty_SP", con);
+                GetConnection(out cmd, out con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("ID", id);
                 cmd.Parameters.AddWithValue("QueryType", id == 0 ? "GET_ALL_MAKEUP" : "GET_MAKEUP");
@@ -297,9 +295,8 @@ namespace Beauty.Admin
         {
             try
             {
-                con = new SqlConnection(ConnectionString());
+                GetConnection(out cmd, out con);
                 await con.OpenAsync();
-                cmd = new SqlCommand("Beauty_SP", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("ID", makeup.ID);
                 cmd.Parameters.AddWithValue("Title", makeup.Title);
@@ -319,9 +316,8 @@ namespace Beauty.Admin
         {
             try
             {
-                con = new SqlConnection(ConnectionString());
+                GetConnection(out cmd, out con);
                 await con.OpenAsync();
-                cmd = new SqlCommand("Beauty_SP", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("ID", id);
                 cmd.Parameters.AddWithValue("QueryType", "DELETE_MAKEUP");
@@ -342,8 +338,7 @@ namespace Beauty.Admin
             try
             {
                 List<News> list = new List<News>();
-                con = new SqlConnection(ConnectionString());
-                cmd = new SqlCommand("Beauty_SP", con);
+                GetConnection(out cmd, out con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("ID", id);
                 cmd.Parameters.AddWithValue("QueryType", id == 0 ? "GET_ALL_NEWS" : "GET_NEWS");
@@ -372,9 +367,8 @@ namespace Beauty.Admin
         {
             try
             {
-                con = new SqlConnection(ConnectionString());
+                GetConnection(out cmd, out con);
                 await con.OpenAsync();
-                cmd = new SqlCommand("Beauty_SP", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("ID", news.ID);
                 cmd.Parameters.AddWithValue("SubTitle", news.SubTitle);
@@ -395,12 +389,154 @@ namespace Beauty.Admin
         {
             try
             {
-                con = new SqlConnection(ConnectionString());
+                GetConnection(out cmd, out con);
                 await con.OpenAsync();
-                cmd = new SqlCommand("Beauty_SP", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("ID", id);
                 cmd.Parameters.AddWithValue("QueryType", "DELETE_NEWS");
+                cmd.ExecuteNonQuery();
+                return id;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+        #endregion
+
+         #region-----Price------
+        public async Task<IEnumerable<Price>> Price(int? id)
+        {
+            try
+            {
+                List<Price> list = new List<Price>(); 
+                GetConnection(out cmd, out con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("ID", id);
+                cmd.Parameters.AddWithValue("QueryType", id == 0 ? "GET_ALL_PRICE" : "GET_PRICE");
+                adt = new SqlDataAdapter(cmd);
+                adt.Fill(ds);
+                dt = ds.Tables[0];
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    Price price = new Price();
+                    price.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
+                    price.SubTitle = dt.Rows[i]["SubTitle"].ToString();
+                    price.Makeup = dt.Rows[i]["Makeup"].ToString();
+                    price.Description = dt.Rows[i]["Description"].ToString();
+                    price.Prices = Convert.ToDecimal(dt.Rows[i]["Price"]);
+                    list.Add(price);
+                }
+                await con.OpenAsync();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<Price> Price(Price price)
+        {
+            try
+            {
+                GetConnection(out cmd, out con);
+                await con.OpenAsync();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("ID", price.ID);
+                cmd.Parameters.AddWithValue("SubTitle", price.SubTitle);
+                cmd.Parameters.AddWithValue("Makeup", price.Makeup);
+                cmd.Parameters.AddWithValue("Description", price.Description);
+                cmd.Parameters.AddWithValue("Price", price.Prices);
+                cmd.Parameters.AddWithValue("QueryType", price.ID == 0 ? "ADD_PRICE" : "UPDATE_PRICE");
+                cmd.ExecuteNonQuery();
+                return price;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<int?> DelPrice(int? id)
+        {
+            try
+            {
+                GetConnection(out cmd, out con);
+                await con.OpenAsync();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("ID", id);
+                cmd.Parameters.AddWithValue("QueryType", "DELETE_PRICE");
+                cmd.ExecuteNonQuery();
+                return id;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+        #endregion
+
+
+        #region-----Banner------
+        public async Task<IEnumerable<Banner>> Banner(int? id)
+        {
+            try
+            {
+                List<Banner> list = new List<Banner>();
+                GetConnection(out cmd, out con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("ID", id);
+                cmd.Parameters.AddWithValue("QueryType", id == 0 ? "GET_ALL_BANNER" : "GET_BANNER");
+                adt = new SqlDataAdapter(cmd);
+                adt.Fill(ds);
+                dt = ds.Tables[0];
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    Banner banner = new Banner();
+                    banner.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
+                    banner.Title = dt.Rows[i]["Title"].ToString();
+                    banner.Image = dt.Rows[i]["Image"].ToString();
+                    list.Add(banner);
+                }
+                await con.OpenAsync();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<Banner> Banner(Banner banner)
+        {
+            try
+            {
+                GetConnection(out cmd, out con);
+                await con.OpenAsync();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("ID", banner.ID);
+                cmd.Parameters.AddWithValue("Title", banner.Title);
+                cmd.Parameters.AddWithValue("Image", banner.Image);
+                cmd.Parameters.AddWithValue("QueryType", banner.ID == 0 ? "ADD_BANNER" : "UPDATE_BANNER");
+                cmd.ExecuteNonQuery();
+                return banner;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<int?> DelBanner(int? id)
+        {
+            try
+            {
+                GetConnection(out cmd, out con);
+                await con.OpenAsync();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("ID", id);
+                cmd.Parameters.AddWithValue("QueryType", "DELETE_BANNER");
                 cmd.ExecuteNonQuery();
                 return id;
             }

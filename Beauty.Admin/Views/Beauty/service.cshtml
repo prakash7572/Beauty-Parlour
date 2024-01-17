@@ -6,7 +6,7 @@
                 <h3><i class="fa fa-wrench" aria-hidden="true" style="font-size:28px;color:black"></i><span class="font-family">Service</span></h3>
             </div>
             <div class="col-md-6 text-end mt-1">
-                <a href="#" class="btn btn-primary text-end font-family" onclick="Clear()" data-toggle="modal" data-target="#rightSideModal">Add</a>
+                <a href="#" class="btn btn-primary text-end font-family" onclick="ClearForm()" data-toggle="modal" data-target="#rightSideModal">Add</a>
             </div>
         </div>
         <table class="table table-bordered table-hover mt-3 DataTable">
@@ -36,7 +36,7 @@
                 </button>
             </div>
             <div class="modal-body">
-            <form id="serviceForm" onsubmit="return SubmitService()">
+                <form id="serviceForm" onsubmit="return SubmitService()">
                 <div class="row">
                     <div class="col-md-4">
                         <span for="Title">Title</span><span class="text-danger">*</span>
@@ -48,12 +48,13 @@
                         </div>
                         <div class="col-md-4">
                             <span for="Image">Image</span><span class="text-danger">*</span>
-                            <input type="text" id="Image" name="Image" class="form-control" required title="" autocomplete="off" />
+                            <input type="file" id="Image" name="Image" class="form-control" accept="image/*" required title="" autocomplete="off" />
                         </div>
                         <textarea id="Description" name="Description" style="resize:none;width: 96%;margin-left: 16px;margin-top: 15px;border:1px solid #ced4da" required title=""></textarea>
                 </div>
                     <div class="modal-footer">
                         <input type="hidden" id="ID" name="ID" value="0" />
+                        <input type="hidden" id="Img" name="Image" value="0" />
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" id="btnsumbit" class="btn btn-primary">Submit</button>
                     </div>

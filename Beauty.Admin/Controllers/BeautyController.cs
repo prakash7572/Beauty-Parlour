@@ -54,7 +54,6 @@ namespace Beauty.Admin.Controllers
             {
                 if (aboutus != null)
                 {
-                    //var location = new Uri($"{Request.Scheme}://{Request.Host}");
                     var files = HttpContext.Request.Form.Files;
 
                     if(files != null)
@@ -201,28 +200,55 @@ namespace Beauty.Admin.Controllers
         }
         [HttpPost]
         [Route("Service")]
-        public async Task<IActionResult> Service([FromBody] Service service)
+        public async Task<IActionResult> Service([FromForm] Service service)
         {
             try
             {
                 if (service != null)
                 {
-                    await _manageBeauty.Service(service);
-                    return Ok(service.ID == 0 ? new { Message = "Service Added succesfully !!!" } : new { Message = "Service Updated succesfully !!!" });
+                    var files = HttpContext.Request.Form.Files;
 
+                    if (files != null)
+                    {
+                        foreach (var Image in files)
+                        {
+                            if (Image != null && Image.Length > 0)
+                            {
+                                var file = Image;
+                                var uploads = Path.Combine(_webHostEnvironment.WebRootPath, "Content\\Image\\");
+                                if (!Directory.Exists(uploads))
+                                {
+                                    Directory.CreateDirectory(uploads);
+                                }
+                                if (file.Length > 0)
+                                {
+                                    string guid = Guid.NewGuid().ToString("N");
+                                    string fixedGuid = guid.Substring(0, 20);
+                                    var fileName = fixedGuid + Path.GetExtension(file.FileName);
+                                    using (var fileStream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
+                                    {
+                                        await file.CopyToAsync(fileStream);
+                                        service.Image = fileName;
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                    await _manageBeauty.Service(service);
+                    return Ok(service.ID == 0 ? new { Message = "Aboutus Added successfully !!!" } : new { Message = "Aboutus Updated successfully !!!" });
                 }
                 else
                 {
-                    return Ok(new { Message = "Data not found  !!!" });
-
+                    return Ok(new { Message = "Something went wrong !!!" });
                 }
-
             }
             catch (Exception ex)
             {
                 return View("/views/shared/error.cshtml", ex);
             }
         }
+
         [HttpGet]
         [Route("DeleteService")]
         public async Task<IActionResult> DelService(int id)
@@ -325,12 +351,41 @@ namespace Beauty.Admin.Controllers
         }
         [HttpPost]
         [Route("News")]
-        public async Task<IActionResult> News([FromBody] News news)
+        public async Task<IActionResult> News([FromForm] News news)
         {
             try
             {
                 if (news != null)
                 {
+                    var files = HttpContext.Request.Form.Files;
+
+                    if (files != null)
+                    {
+                        foreach (var Image in files)
+                        {
+                            if (Image != null && Image.Length > 0)
+                            {
+                                var file = Image;
+                                var uploads = Path.Combine(_webHostEnvironment.WebRootPath, "Content\\Image\\");
+                                if (!Directory.Exists(uploads))
+                                {
+                                    Directory.CreateDirectory(uploads);
+                                }
+                                if (file.Length > 0)
+                                {
+                                    string guid = Guid.NewGuid().ToString("N");
+                                    string fixedGuid = guid.Substring(0, 20);
+                                    var fileName = fixedGuid + Path.GetExtension(file.FileName);
+                                    using (var fileStream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
+                                    {
+                                        await file.CopyToAsync(fileStream);
+                                        news.Image = fileName;
+                                    }
+                                }
+                            }
+                        }
+
+                    }
                     await _manageBeauty.News(news);
                     return Ok(news.ID == 0 ? new { Message = "News Added succesfully !!!" } : new { Message = "News Updated succesfully !!!" });
 
@@ -365,5 +420,159 @@ namespace Beauty.Admin.Controllers
 
 
         #endregion
+
+        #region--------Price------
+        [Route("BeautyPrice")]
+        public IActionResult Price()
+        {
+            return View("/views/beauty/price.cshtml");
+        }
+        [Route("Price")]
+        public async Task<IActionResult> Price(int? id = 0)
+        {
+            try
+            {
+                IEnumerable<Price> news = await _manageBeauty.Price(id); ;
+                return Content(JsonConvert.SerializeObject(news));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpPost]
+        [Route("Price")]
+        public async Task<IActionResult> Price([FromBody] Price price)
+        {
+            try
+            {
+                if (price != null)
+                {
+                    await _manageBeauty.Price(price);
+                    return Ok(price.ID == 0 ? new { Message = "Price Added succesfully !!!" } : new { Message = "Price Updated succesfully !!!" });
+
+                }
+                else
+                {
+                    return Ok(new { Message = "Something went wrong !!!" });
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return View("/views/shared/error.cshtml", ex);
+            }
+        }
+        [HttpGet]
+        [Route("DeletePrice")]
+        public async Task<IActionResult> DelPrice(int id)
+        {
+            try
+            {
+                await _manageBeauty.DelPrice(id);
+                return Ok(new { Message = "Price Deleted succesfully !!!" });
+
+            }
+            catch (Exception ex)
+            {
+                return View("/views/shared/error.cshtml", ex);
+            }
+        }
+
+
+        #endregion
+
+        #region--------Banner------
+        [Route("BeautyBanner")]
+        public IActionResult Banner()
+        {
+            return View("/views/beauty/banner.cshtml");
+        }
+        [Route("Banner")]
+        public async Task<IActionResult> Banner(int? id = 0)
+        {
+            try
+            {
+                IEnumerable<Banner> banner = await _manageBeauty.Banner(id); ;
+                return Content(JsonConvert.SerializeObject(banner));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpPost]
+        [Route("Banner")]
+        public async Task<IActionResult> Banner([FromForm] Banner banner)
+        {
+            try
+            {
+                if (banner != null)
+                {
+                    var files = HttpContext.Request.Form.Files;
+
+                    if (files != null)
+                    {
+                        foreach (var Image in files)
+                        {
+                            if (Image != null && Image.Length > 0)
+                            {
+                                var file = Image;
+                                var uploads = Path.Combine(_webHostEnvironment.WebRootPath, "Content\\Image\\");
+                                if (!Directory.Exists(uploads))
+                                {
+                                    Directory.CreateDirectory(uploads);
+                                }
+                                if (file.Length > 0)
+                                {
+                                    string guid = Guid.NewGuid().ToString("N");
+                                    string fixedGuid = guid.Substring(0, 20);
+                                    var fileName = fixedGuid + Path.GetExtension(file.FileName);
+                                    using (var fileStream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
+                                    {
+                                        await file.CopyToAsync(fileStream);
+                                        banner.Image = fileName;
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                    await _manageBeauty.Banner(banner);
+                    return Ok(banner.ID == 0 ? new { Message = "Banner Added succesfully !!!" } : new { Message = "Banner Updated succesfully !!!" });
+
+                }
+                else
+                {
+                    return Ok(new { Message = "Something went wrong !!!" });
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return View("/views/shared/error.cshtml", ex);
+            }
+        }
+        [HttpGet]
+        [Route("DeleteBanner")]
+        public async Task<IActionResult> DelBanner(int id)
+        {
+            try
+            {
+                await _manageBeauty.DelBanner(id);
+                return Ok(new { Message = "Banner Deleted succesfully !!!" });
+
+            }
+            catch (Exception ex)
+            {
+                return View("/views/shared/error.cshtml", ex);
+            }
+        }
+
+
+        #endregion
+
     }
 }

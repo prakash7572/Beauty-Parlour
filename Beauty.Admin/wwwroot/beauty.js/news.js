@@ -1,3 +1,5 @@
+var style = `style="font-size:20px"`;
+var url = window.location.origin;
 function loadData() {
     $.ajax({
         url: "/beauty/news",
@@ -5,18 +7,18 @@ function loadData() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            var html = '';
+            let html = '';
             $.each(result, function (key, item) {
-                html += '<tr>';
+                html += `<tr>`;
                 html += `<td>${key + 1}</td>`;
                 html += `<td>${item.SubTitle}</td>`;
                 html += `<td>${item.Description}</td>`;
-                html += `<td>${item.Image}</td>`;
-                html += `<td>${item.MakeupType}</td>`;
+                html += `<td><img src="${url}/Content/Image/${item.Image}" widht="40" height="30" /></td>`;
+                html += `<td>${item.MakeupType == true ? `<i class="fa fa-check-square-o" ${style} ></i>` : `<i class="fa fa-square-o" ${style}></i>` }</td>`;
                 html += `<td>
-                                     <a href="#" data-toggle="modal" data-target="#rightSideModal" onclick="GetNews(${item.ID})"><i class="fa fa-edit"></i></a>
-                                     <a href="#" onclick="DelNews(${item.ID})"><i class="fa fa-trash"></i></a>
-                                     </td>`;
+                          <a href="#" data-toggle="modal" data-target="#rightSideModal" onclick="GetNews(${item.ID})"><i class="fa fa-edit" ${style}></i></a>
+                          <a href="#" onclick="DelNews(${item.ID})"><i class="fa fa-trash" ${style}></i></a>
+                          </td>`;
                 html += '</tr>';
             });
             $('#newslist').html(html);
@@ -38,7 +40,7 @@ function GetNews(id) {
         dataType: "json",
         success: function (result) {
             $("#SubTitle").val(result[0].SubTitle);
-            $("#Image").val(result[0].Image);
+            $("#Img").val(result[0].Image);
             $("#Description").val(result[0].Description);
             $("#ID").val(result[0].ID);
             if (result[0].MakeupType == true ? $("#MakeupType").prop("checked", true) : $("#MakeupType").prop("cheked", false));
@@ -48,22 +50,29 @@ function GetNews(id) {
         }
     });
 }
-function submitNews() {
+function SubmitNews() {
+
     var status;
     if ($('#MakeupType').is(":checked")) { status = true; } else { status = false; }
-    var news = {
-        ID: $('#ID').val(),
-        SubTitle: $('#SubTitle').val(),
-        Image: $('#Image').val(),
-        Description: $('#Description').val(),
-        MakeupType: status,
-    };
+    var data = new FormData();
+    data.append("ID", $('#ID').val());  
+    data.append("SubTitle", $('#SubTitle').val());
+    data.append("Description", $('#Description').val());
+    data.append("MakeupType", status);
+
+    let fileInput = $("#Image")[0].files[0];
+    if (fileInput) {
+        data.append("Image", fileInput);
+    } else
+    {
+        data.append("Image", $("#Img").val());
+    }
     $.ajax({
         url: "/beauty/news",
-        data: JSON.stringify(news),
+        data: data,
         type: "POST",
-        contentType: "application/json",
-        dataType: "json",
+        contentType: false,
+        processData: false,
         success: function (result) {
             alert(result.message);
             window.location.href = '/beauty/beautynews';

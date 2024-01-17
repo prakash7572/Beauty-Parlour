@@ -1,4 +1,5 @@
 //...............Start Aboutus.................//
+var url = window.location.origin;
     function loadData() {
         $.ajax({
             url: "/beauty/aboutus",
@@ -6,14 +7,14 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (result) {
-                var html = '';
+                let html = '';
                 $.each(result, function (key, item) {
                     html += '<tr>';
                     html += `<td>${key + 1}</td>`;
                     html += `<td>${item.Title}</td>`;
                     html += `<td>${item.SubTitle}</td>`;
                     html += `<td>${item.Description}</td>`;
-                    html += `<td><img src="https://localhost:44310/Content/Image/${item.Image}" widht="40" height="40" />'</td>`;
+                    html += `<td><img src="${url}/Content/Image/${item.Image}" widht="40" height="30" /></td>`;
                     html += `<td>
                                  <a href="#" data-toggle="modal" data-target="#rightSideModal" onclick="GetAbout(${item.ID})"><i class="fa fa-edit"></i></a>
                                  <a href="#" onclick="delAbout(${item.ID})"><i class="fa fa-trash"></i></a>
@@ -28,20 +29,21 @@
         });
     }
     loadData();
-    function Clear() {
+function ClearForm() {
         $('form#aboutusForm').trigger("reset");
         $('#ID').val(0);
     }
-function GetAbout(id) {
+    function GetAbout(id) {
         $.ajax({
             url: `/beauty/aboutus?id=${id}`,
             type: "GET",
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (result) {
+                $('#Image').prop('required', false);
                 $("#Title").val(result[0].Title);
                 $("#SubTitle").val(result[0].SubTitle);
-                $("#Image").val(result[0].Image);
+                $("#Img").val(result[0].Image);
                 $("#Description").val(result[0].Description);
                 $("#ID").val(result[0].ID);
             },
@@ -50,66 +52,35 @@ function GetAbout(id) {
             }
         });
     }
-    //function submitAbout() {
-    //    var aboutus = {
-    //        ID: $('#ID').val(),
-    //        Title: $('#Title').val(),
-    //        SubTitle: $('#SubTitle').val(),
-    //        Image: $('#Image').val(),
-    //        Description: $('#Description').val()
-    //    };
-
-    //    $.ajax({
-    //        url: "/beauty/aboutus",
-    //        data: JSON.stringify(aboutus),
-    //        type: "POST",
-    //        contentType: "application/json",
-    //        dataType: "json",
-    //        success: function (result) {
-    //            alert(result.message);
-    //            window.location.href = '/beauty/beautyaboutus';
-    //        },
-    //        error: function (errormessage) {
-    //            alert(errormessage.responseText);
-    //        }
-    //    });
-    //    return false;
-//}
-
+  
 function submitAbout() {
-    var aboutus = {
-        ID: $('#ID').val(),
-        Title: $('#Title').val(),
-        SubTitle: $('#SubTitle').val(),
-        // Remove $('#Image').val() for file input
-        Description: $('#Description').val()
-    };
-
+    
     var data = new FormData();
-    data.append("ID", aboutus.ID);
-    data.append("Title", aboutus.Title);
-    data.append("SubTitle", aboutus.SubTitle);
-    data.append("Description", aboutus.Description);
+    data.append("ID", $('#ID').val());
+    data.append("Title", $('#Title').val());
+    data.append("SubTitle", $('#SubTitle').val());
+    data.append("Description", $('#Description').val());
 
-    // Append the file input data if a file is selected
-    var fileInput = $('#Image')[0].files[0];
-    if (fileInput) {
-        data.append("Image", fileInput);
-    }
-    $.ajax({
-        url: "/beauty/aboutus",
-        data: data,
-        type: "POST",
-        contentType: false,
-        processData: false,
-        success: function (result) {
-            alert(result.message);
-            window.location.href = '/beauty/beautyaboutus';
-        },
-        error: function (errormessage) {
-            alert(errormessage.responseText);
-        }
-    });
+    let fileInput = $('#Image')[0].files[0];
+       if (fileInput) {
+           data.append("Image", fileInput);
+       } else {
+           data.append("Image", $("#Img").val());
+       }
+       $.ajax({
+           url: "/beauty/aboutus",
+           data: data,
+           type: "POST",
+           contentType: false,
+           processData: false,
+           success: function (result) {
+               window.location.href = '/beauty/beautyaboutus';
+               alert(result.message);
+           },
+           error: function (errormessage) {
+               alert(errormessage.responseText);
+           }
+       });
     return false;
 }
 

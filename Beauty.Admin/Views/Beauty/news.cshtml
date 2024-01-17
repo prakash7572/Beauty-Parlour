@@ -37,7 +37,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="newsForm" onsubmit="return submitNews()">
+                <form id="newsForm" onsubmit="return SubmitNews()">
                     <div class="row">
                         <div class="col-md-4">
                             <span for="SubTitle">SubTitle</span><span class="text-danger">*</span>
@@ -45,7 +45,7 @@
                         </div>
                         <div class="col-md-4">
                             <span for="Image">Image</span><span class="text-danger">*</span>
-                            <input type="text" id="Image" name="Image" class="form-control" required title="" autocomplete="off" />
+                            <input type="file" id="Image" name="Image" accept="image/*" class="form-control" required title="" autocomplete="off" />
                         </div>
                         <div class="col-md-4">
                             <label for="MakeupType">MakeupType</label><span class="text-danger">*</span>

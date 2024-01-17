@@ -1,18 +1,19 @@
-    function loadData() {
+var url = window.location.origin;
+function loadData() {
         $.ajax({
             url: "/beauty/service",
             type: "GET",
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (result) {
-                var html = '';
+                let html = '';
                 $.each(result, function (key, item) {
                     html += '<tr>';
                     html += `<td>${key + 1}</td>`;
                     html += `<td>${item.Title}</td>`;
                     html += `<td>${item.SubTitle}</td>`;
                     html += `<td>${item.Description}</td>`;
-                    html += `<td>${item.Image}</td>`;
+                    html += `<td><img src="${url}/Content/Image/${item.Image}" widht="40" height="30" /></td>`;
                     html += `<td>
                                      <a href="#" data-toggle="modal" data-target="#rightSideModal" onclick="GetService(${item.ID})"><i class="fa fa-edit"></i></a>
                                      <a href="#" onclick="DelService(${item.ID})"><i class="fa fa-trash"></i></a>
@@ -27,8 +28,9 @@
         });
     }
     loadData();
-    function Clear() {
+    function ClearForm() {
         $('form#serviceForm').trigger("reset");
+        $("#ID").val(0)
     }
     function GetService(ID) {
         $.ajax({
@@ -37,34 +39,40 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (result) {
+                $('#Image').prop('required', false);
                 $("#Title").val(result[0].Title);
                 $("#SubTitle").val(result[0].SubTitle);
-                $("#Image").val(result[0].Image);
                 $("#Description").val(result[0].Description);
                 $("#ID").val(result[0].ID);
+                $("#Img").val(result[0].Image)
             },
             error: function (errormessage) {
                 alert(errormessage.responseText);
             }
         });
     }
-    function SubmitService() {
-        var servic = {
-            ID: $('#ID').val(),
-            Title: $('#Title').val(),
-            SubTitle: $('#SubTitle').val(),
-            Image: $('#Image').val(),
-            Description: $('#Description').val()
-        };
+function SubmitService() {
+
+        var data = new FormData();
+        data.append("ID", $('#ID').val()),
+        data.append("Title", $('#Title').val()),
+        data.append("SubTitle", $('#SubTitle').val())
+        data.append("Description", $('#Description').val())
+
+        let fileInput = $('#Image')[0].files[0];
+        if (fileInput) {
+            data.append("Image", fileInput);
+        } else {
+            data.append("Image", $("#Img").val());
+        }
         $.ajax({
             url: "/beauty/service",
-            data: JSON.stringify(servic),
+            data: data,
             type: "POST",
-            contentType: "application/json",
-            dataType: "json",
+            contentType: false,
+            processData: false,
             success: function (result) {
                 window.location.href = '/beauty/beautyservice';
-                alert(result.message);
             },
             error: function (errormessage) {
                 alert(errormessage.responseText);

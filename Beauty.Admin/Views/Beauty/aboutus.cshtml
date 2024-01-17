@@ -7,7 +7,7 @@
                 <h3><i class="fa fa-info-circle" style="font-size:28px;color:black"></i> <span class="font-family">Aboutus</span></h3>
             </div>
             <div class="col-md-6 text-end mt-1">
-                <a href="#" class="btn btn-primary text-end font-family" onclick="Clear()" data-toggle="modal" data-target="#rightSideModal">Add</a>
+                <a href="#" class="btn btn-primary text-end font-family" onclick="ClearForm()" data-toggle="modal" data-target="#rightSideModal">Add</a>
             </div>
         </div>
         <table class="table table-bordered table-hover mt-3 DataTable">
@@ -54,6 +54,7 @@
                 </div>
                     <div class="modal-footer">
                         <input type="hidden" id="ID" name="ID" />
+                        <input type="hidden" id="Img" name="Image" />
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" id="btnsumbit" class="btn btn-primary">Submit</button>
                     </div>
