@@ -7,12 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\beauty.js\clientOpening.js" />
     <Content Remove="wwwroot\js\banner.js" />
     <Content Remove="wwwroot\js\makeup.js" />
     <Content Remove="wwwroot\js\price.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\beauty.js\clientOpening.js" />
     <None Include="wwwroot\beauty.js\banner.js" />
     <None Include="wwwroot\beauty.js\makeup.js" />
     <None Include="wwwroot\beauty.js\price.js" />

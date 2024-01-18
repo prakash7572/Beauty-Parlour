@@ -574,5 +574,96 @@ namespace Beauty.Admin.Controllers
 
         #endregion
 
+        #region--------ClientOpening------
+        [Route("BeautyClientOpen")]
+        public IActionResult ClientOpening()
+        {
+            return View("/views/beauty/clientopening.cshtml");
+        }
+        [Route("ClientOpening")]
+        public async Task<IActionResult> ClientOpening(int? id = 0)
+        {
+            try
+            {
+                IEnumerable<ClientOpening> clients = await _manageBeauty.ClientOpening(id); ;
+                return Content(JsonConvert.SerializeObject(clients));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpPost]
+        [Route("ClientOpening")]
+        public async Task<IActionResult> ClientOpening([FromForm] ClientOpening client)
+        {
+            try
+            {
+                if (client != null)
+                {
+                    var files = HttpContext.Request.Form.Files;
+
+                    if (files != null)
+                    {
+                        foreach (var Image in files)
+                        {
+                            if (Image != null && Image.Length > 0)
+                            {
+                                var file = Image;
+                                var uploads = Path.Combine(_webHostEnvironment.WebRootPath, "Content\\Image\\");
+                                if (!Directory.Exists(uploads))
+                                {
+                                    Directory.CreateDirectory(uploads);
+                                }
+                                if (file.Length > 0)
+                                {
+                                    string guid = Guid.NewGuid().ToString("N");
+                                    string fixedGuid = guid.Substring(0, 20);
+                                    var fileName = fixedGuid + Path.GetExtension(file.FileName);
+                                    using (var fileStream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
+                                    {
+                                        await file.CopyToAsync(fileStream);
+                                        client.Image = fileName;
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                    await _manageBeauty.ClientOpening(client);
+                    return Ok(client.ID == 0 ? new { Message = "ClientOpening Added succesfully !!!" } : new { Message = "ClientOpening Updated succesfully !!!" });
+
+                }
+                else
+                {
+                    return Ok(new { Message = "Something went wrong !!!" });
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return View("/views/shared/error.cshtml", ex);
+            }
+        }
+        [HttpGet]
+        [Route("DeleteClientOpening")]
+        public async Task<IActionResult> DelClientOpening(int id)
+        {
+            try
+            {
+                await _manageBeauty.DelClientOpening(id);
+                return Ok(new { Message = "ClientOpening Deleted succesfully !!!" });
+
+            }
+            catch (Exception ex)
+            {
+                return View("/views/shared/error.cshtml", ex);
+            }
+        }
+
+
+        #endregion
+
     }
 }
