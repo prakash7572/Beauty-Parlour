@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Beauty.Admin</title>
+    <title>@ViewData["Title"]  Beauty.Admin</title>
+    <link rel="shortcut icon" href="~/favicon.png" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/jquery.dataTables.css" asp-append-version="true" />
@@ -47,7 +48,7 @@
                 </div>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                         <div></div>
-                        <div class="profile">
+                    <div class="profile">
                             <div class="user">
                                 <p>probablykat66</p>
                             </div>
@@ -55,13 +56,13 @@
                                 <img src="https://i.postimg.cc/BvNYhMHS/user-img.jpg" alt="some user image">
                             </div>
                         </div>
-                        <div class="menu">
+                    <div class="menu" style="z-index: 99;">
                             <ul>
-                                <li><a href="#"><i class="ph-bold ph-user"></i>&nbsp;Profile</a></li>
-                                <li><a href="#"><i class="ph-bold ph-envelope-simple"></i>&nbsp;Inbox</a></li>
-                                <li><a href="#"><i class="ph-bold ph-gear-six"></i>&nbsp;Settings</a></li>
-                                <li><a href="#"><i class="ph-bold ph-question"></i>&nbsp;Help</a></li>
-                                <li><a href="#"><i class="ph-bold ph-sign-out"></i>&nbsp;Sign Out</a></li>
+                                <li><a href="/home/profile"><i class="ph-bold ph-user"></i>Profile</a></li>
+                                <li><a href="#"><i class="ph-bold ph-envelope-simple"></i>Inbox</a></li>
+                                <li><a href="#"><i class="ph-bold ph-gear-six"></i>Settings</a></li>
+                                <li><a href="#"><i class="ph-bold ph-question"></i>Help</a></li>
+                                <li><a href="#"><i class="ph-bold ph-sign-out"></i>Sign Out</a></li>
                             </ul>
                         </div>
                 </div>
@@ -94,17 +95,18 @@
             <div class="row">
                 <div class="col-md-2">
                     <div class="shadow-lg p-1 rounded" style="background-color:#ee4f48;height:min-content">
+                        <i class=""></i>
                         <ul class="list-group">
-                            <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenHome()" href="#"><i class="fa fa-home" style="font-size:28px;color:white"></i>    Home </a></li>
-                            <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenClient()" href="#"><i class="fa fa-user" style="font-size:28px;color:white"></i>    Client </a></li>
+                            @* <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenHome()" href="#"><i class="fa fa-home" style="font-size:28px;color:white"></i>    Home </a></li> *@
+                            <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenClient()" href="#"><i class="fas fa-users" style="font-size:28px;color:white"></i>    Clients </a></li>
                             <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenAbout()" href="#"><i class="fa fa-info-circle" style="font-size:28px;color:white"></i>    About </a></li>
                             <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenService()" href="#"><i class="fa fa-wrench" aria-hidden="true" style="font-size:28px;color:white"></i>  Services</a></li>
                             <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenNews()" href="#"><i class="fa fa-newspaper-o" style="font-size: 28px; color: white;"></i>  News</a></li>
                             <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenContact()" href="#"><i class="fa fa-address-book" aria-hidden="true" style="font-size: 28px; color: white;"></i> Contact</a></li>
                             <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenPrice()" href="#"><i class="fa fa-money" aria-hidden="true" style="font-size: 28px; color: white;"></i> Price</a></li>
-                            @* <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenMakeup()" href="#"><i class="fa fa-paint-brush" aria-hidden="true" style="font-size: 28px; color: white;"></i> Maekup</a></li> *@
+                            <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenBrands()" href="#"><i class="fa fa-flag" style="font-size: 28px; color: white;"></i> Brands</a></li>
                             <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenBanner()" href="#"><i class="fa fa-picture-o" aria-hidden="true" style="font-size: 28px; color: white;"></i> Banner</a></li>
-                            @* <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenTeam()" href="#"><i class="fa fa-address-book" aria-hidden="true" style="font-size: 28px; color: white;"></i> Team</a></li> *@
+                            <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenTeam()" href="#"><i class="fa fa-group" aria-hidden="true" style="font-size: 28px; color: white;"></i> Team</a></li>
                            @*  <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenClientOpen()" href="#"><i class="fa fa-address-book" aria-hidden="true" style="font-size: 28px; color: white;"></i> ClientOpen</a></li>
                             <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenClientBrands()" href="#"><i class="fa fa-address-book" aria-hidden="true" style="font-size: 28px; color: white;"></i> Brands</a></li> *@
                           </ul>
@@ -116,7 +118,7 @@
             </div>
         </main>
     </div>
-
+    <div style="padding:30px"></div>
     <footer class="border-top footer text-muted bg-white">
         <div class="container">
             &copy; 2023 - Beauty.Admin - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
@@ -169,9 +171,10 @@
         function OpenClient() {
             window.location.href = "/beauty/beautyclientopen";
         }
-        function OpenClientBrands() {
-            window.location.href = "/beauty/beautybrands";
+        function OpenBrands() {
+            window.location.href = "/beauty/beautybrand";
         }
+       
     </script>
 </body>
 </html>

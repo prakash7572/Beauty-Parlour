@@ -7,13 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\beauty.js\brand.js" />
     <Content Remove="wwwroot\beauty.js\clientOpening.js" />
+    <Content Remove="wwwroot\beauty.js\team.js" />
     <Content Remove="wwwroot\js\banner.js" />
     <Content Remove="wwwroot\js\makeup.js" />
     <Content Remove="wwwroot\js\price.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\beauty.js\team.js" />
+    <None Include="wwwroot\beauty.js\brand.js" />
     <None Include="wwwroot\beauty.js\clientOpening.js" />
     <None Include="wwwroot\beauty.js\banner.js" />
     <None Include="wwwroot\beauty.js\makeup.js" />
@@ -22,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
   </ItemGroup>
 

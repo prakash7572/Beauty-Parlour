@@ -1,0 +1,60 @@
+﻿<script src="~/beauty.js/brand.js" asp-append-version="true"></script>
+
+<div class="card" style="width: 58rem;margin-left:70px">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <h3><i class="fa fa-flag" style="font-size:28px;color:black"></i> <span class="font-family">Brands</span></h3>
+            </div>
+            <div class="col-md-6 text-end mt-1">
+                <a href="#" class="btn btn-primary text-end font-family" onclick="ClearForm()" data-toggle="modal" data-target="#rightSideModal">Add</a>
+            </div>
+        </div>
+        <table class="table table-bordered table-hover mt-3 DataTable">
+            <thead>
+                <tr style="background-color:lightgray;text-align:center">
+                    <th scope="col">#</th>
+                    <th scope="col">SubTitle</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody id="list" style="text-align:center">
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal fade" id="rightSideModal" tabindex="-1" role="dialog" aria-labelledby="rightSideModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-right" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="rightSideModalLabel">Manage Brands</h5>
+                <button type="button"  class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="brandForm" onsubmit="return SubmitBrand()" method="post" enctype="multipart/form-data">
+                <div class="row">
+                        <div class="col-md-4">
+                            <span for="SubTitle">SubTitle</span><span class="text-danger">*</span>
+                            <input type="text" id="SubTitle" name="SubTitle" class="form-control" required title="" autocomplete="off" />
+                        </div>
+                        <div class="col-md-4">
+                            <span for="Image">Image</span><span class="text-danger">*</span>
+                            <input type="file" id="Image" name="Image" class="form-control" accept="image/*" required title="" autocomplete="off" />
+                        </div>
+                </div>
+                    <div class="modal-footer">
+                        <input type="hidden" id="ID" name="ID" />
+                        <input type="hidden" id="Img" name="Image" />
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" id="btnsumbit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/jquery-3.6.4.min.js" asp-append-version="true"></script>
+<script src="~/js/jquery.dataTables.js" asp-append-version="true"></script>

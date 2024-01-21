@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Reflection;
 using Microsoft.AspNetCore.Hosting;
+using System.Drawing.Drawing2D;
 
 namespace Beauty.Admin.Controllers
 {
@@ -25,7 +26,7 @@ namespace Beauty.Admin.Controllers
 
         #endregion
 
-        #region--------Aboutus------
+        #region---------Aboutus---------
         [Route("BeautyAboutus")]
         public IActionResult Aboutus()
         {
@@ -117,7 +118,7 @@ namespace Beauty.Admin.Controllers
 
         #endregion
 
-        #region--------Contactus------
+        #region--------Contactus--------
         [Route("BeautyContactus")]
         public IActionResult Contactus()
         {
@@ -654,6 +655,188 @@ namespace Beauty.Admin.Controllers
             {
                 await _manageBeauty.DelClientOpening(id);
                 return Ok(new { Message = "ClientOpening Deleted succesfully !!!" });
+
+            }
+            catch (Exception ex)
+            {
+                return View("/views/shared/error.cshtml", ex);
+            }
+        }
+
+
+        #endregion
+
+        #region--------Brand------
+        [Route("BeautyBrand")]
+        public IActionResult Brand()
+        {
+            return View("/views/beauty/brands.cshtml");
+        }
+        [Route("Brand")]
+        public async Task<IActionResult> Brand(int? id = 0)
+        {
+            try
+            {
+                IEnumerable<Brands> brands = await _manageBeauty.Brand(id); ;
+                return Content(JsonConvert.SerializeObject(brands));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpPost]
+        [Route("Brand")]
+        public async Task<IActionResult> Brand([FromForm] Brands brands)
+        {
+            try
+            {
+                if (brands != null)
+                {
+                    var files = HttpContext.Request.Form.Files;
+
+                    if (files != null)
+                    {
+                        foreach (var Image in files)
+                        {
+                            if (Image != null && Image.Length > 0)
+                            {
+                                var file = Image;
+                                var uploads = Path.Combine(_webHostEnvironment.WebRootPath, "Content\\Image\\");
+                                if (!Directory.Exists(uploads))
+                                {
+                                    Directory.CreateDirectory(uploads);
+                                }
+                                if (file.Length > 0)
+                                {
+                                    string guid = Guid.NewGuid().ToString("N");
+                                    string fixedGuid = guid.Substring(0, 20);
+                                    var fileName = fixedGuid + Path.GetExtension(file.FileName);
+                                    using (var fileStream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
+                                    {
+                                        await file.CopyToAsync(fileStream);
+                                        brands.Image = fileName;
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                    await _manageBeauty.Brands(brands);
+                    return Ok(brands.ID == 0 ? new { Message = "Brand Added succesfully !!!" } : new { Message = "Brand Updated succesfully !!!" });
+
+                }
+                else
+                {
+                    return Ok(new { Message = "Something went wrong !!!" });
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return View("/views/shared/error.cshtml", ex);
+            }
+        }
+        [HttpGet]
+        [Route("DeleteBrands")]
+        public async Task<IActionResult> DelBrand(int id)
+        {
+            try
+            {
+                await _manageBeauty.DelBrands(id);
+                return Ok(new { Message = "Brand Deleted succesfully !!!" });
+
+            }
+            catch (Exception ex)
+            {
+                return View("/views/shared/error.cshtml", ex);
+            }
+        }
+
+
+        #endregion
+
+        #region--------Team------
+        [Route("BeautyTeam")]
+        public IActionResult Team()
+        {
+            return View("/views/beauty/team.cshtml");
+        }
+        [Route("Team")]
+        public async Task<IActionResult> Team(int? id = 0)
+        {
+            try
+            {
+                IEnumerable<Team> brands = await _manageBeauty.Team(id); ;
+                return Content(JsonConvert.SerializeObject(brands));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpPost]
+        [Route("Team")]
+        public async Task<IActionResult> Team([FromForm] Team team)
+        {
+            try
+            {
+                if (team != null)
+                {
+                    var files = HttpContext.Request.Form.Files;
+
+                    if (files != null)
+                    {
+                        foreach (var Image in files)
+                        {
+                            if (Image != null && Image.Length > 0)
+                            {
+                                var file = Image;
+                                var uploads = Path.Combine(_webHostEnvironment.WebRootPath, "Content\\Image\\");
+                                if (!Directory.Exists(uploads))
+                                {
+                                    Directory.CreateDirectory(uploads);
+                                }
+                                if (file.Length > 0)
+                                {
+                                    string guid = Guid.NewGuid().ToString("N");
+                                    string fixedGuid = guid.Substring(0, 20);
+                                    var fileName = fixedGuid + Path.GetExtension(file.FileName);
+                                    using (var fileStream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
+                                    {
+                                        await file.CopyToAsync(fileStream);
+                                        team.Image = fileName;
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                    await _manageBeauty.Team(team);
+                    return Ok(team.ID == 0 ? new { Message = "Team Added succesfully !!!" } : new { Message = "Team Updated succesfully !!!" });
+
+                }
+                else
+                {
+                    return Ok(new { Message = "Something went wrong !!!" });
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return View("/views/shared/error.cshtml", ex);
+            }
+        }
+        [HttpGet]
+        [Route("DeleteTeam")]
+        public async Task<IActionResult> DelTeam(int id)
+        {
+            try
+            {
+                await _manageBeauty.DelTeam(id);
+                return Ok(new { Message = "Team Deleted succesfully !!!" });
 
             }
             catch (Exception ex)

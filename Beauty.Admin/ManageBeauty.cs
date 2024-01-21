@@ -3,7 +3,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Xml.Linq;
-using NuGet.Protocol.Plugins;
 
 
 namespace Beauty.Admin
@@ -99,8 +98,8 @@ namespace Beauty.Admin
         {
             try
             {
-                await con.OpenAsync();
                 GetConnection(out cmd, out con);
+                await con.OpenAsync();
                 cmd.Parameters.AddWithValue("ID", id);
                 cmd.Parameters.AddWithValue("QueryType","DELETE_ABOUTUS");
                 cmd.ExecuteNonQuery();
@@ -114,7 +113,7 @@ namespace Beauty.Admin
         }
         #endregion
 
-        #region------Contactus------
+        #region------Contactus-------
         public async Task<IEnumerable<Contactus>> Contactus(int? id)
         {
             try
@@ -172,7 +171,6 @@ namespace Beauty.Admin
             {
                 GetConnection(out cmd, out con);
                 await con.OpenAsync();
-               
                 cmd.Parameters.AddWithValue("ID", id);
                 cmd.Parameters.AddWithValue("QueryType", "DELETE_CONTACTS");
                 cmd.ExecuteNonQuery();
@@ -186,7 +184,7 @@ namespace Beauty.Admin
         }
         #endregion
 
-        #region------Service------
+        #region------Services--------
         public async Task<IEnumerable<Service>> Service(int? id)
         {
             try
@@ -259,7 +257,7 @@ namespace Beauty.Admin
         }
         #endregion
 
-        #region------Makeup------
+        #region------Makeup---------
         public async Task<IEnumerable<Makeup>> Makeup(int? id)
         {
             try
@@ -330,7 +328,7 @@ namespace Beauty.Admin
         }
         #endregion
 
-        #region-----News------
+        #region---------News-----------
         public async Task<IEnumerable<News>> News(int? id)
         {
             try
@@ -403,7 +401,7 @@ namespace Beauty.Admin
         }
         #endregion
 
-        #region-----Price------
+        #region---------Price----------
         public async Task<IEnumerable<Price>> Price(int? id)
         {
             try
@@ -476,7 +474,7 @@ namespace Beauty.Admin
         }
         #endregion
 
-        #region-----Banner------
+        #region--------Banner---------
         public async Task<IEnumerable<Banner>> Banner(int? id)
         {
             try
@@ -533,6 +531,150 @@ namespace Beauty.Admin
                
                 cmd.Parameters.AddWithValue("ID", id);
                 cmd.Parameters.AddWithValue("QueryType", "DELETE_BANNER");
+                cmd.ExecuteNonQuery();
+                return id;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+        #endregion
+
+        #region--------Brands---------
+        public async Task<IEnumerable<Brands>> Brand(int? id)
+        {
+            try
+            {
+                List<Brands> list = new List<Brands>();
+                GetConnection(out cmd, out con);
+                cmd.Parameters.AddWithValue("ID", id);
+                cmd.Parameters.AddWithValue("QueryType", id == 0 ? "GET_ALL_BRAND" : "GET_BRAND");
+                adt = new SqlDataAdapter(cmd);
+                adt.Fill(ds);
+                dt = ds.Tables[0];
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    Brands brands = new Brands();
+                    brands.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
+                    brands.SubTitle = dt.Rows[i]["SubTitle"].ToString();
+                    brands.Image = dt.Rows[i]["Image"].ToString();
+                    list.Add(brands);
+                }
+                await con.OpenAsync();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<Brands> Brands(Brands brands)
+        {
+            try
+            {
+                GetConnection(out cmd, out con);
+                await con.OpenAsync();
+                cmd.Parameters.AddWithValue("ID", brands.ID);
+                cmd.Parameters.AddWithValue("SubTitle", brands.SubTitle);
+                cmd.Parameters.AddWithValue("Image", brands.Image);
+                cmd.Parameters.AddWithValue("QueryType", brands.ID == 0 ? "ADD_BRAND" : "UPDATE_BRAND");
+                cmd.ExecuteNonQuery();
+                return brands;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<int?> DelBrands(int? id)
+        {
+            try
+            {
+                GetConnection(out cmd, out con);
+                await con.OpenAsync();
+                cmd.Parameters.AddWithValue("ID", id);
+                cmd.Parameters.AddWithValue("QueryType", "DELETE_BRAND");
+                cmd.ExecuteNonQuery();
+                return id;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+        #endregion
+
+        #region--------Brands---------
+        public async Task<IEnumerable<Team>> Team(int? id)
+        {
+            try
+            {
+                List<Team> list = new List<Team>();
+                GetConnection(out cmd, out con);
+                cmd.Parameters.AddWithValue("ID", id);
+                cmd.Parameters.AddWithValue("QueryType", id == 0 ? "GET_ALL_TEAM" : "GET_TEAM");
+                adt = new SqlDataAdapter(cmd);
+                adt.Fill(ds);
+                dt = ds.Tables[0];
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    Team brands = new Team();
+                    brands.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
+                    brands.Title = dt.Rows[i]["Title"].ToString();
+                    brands.FirstName = dt.Rows[i]["FirstName"].ToString();
+                    brands.MiddleName = dt.Rows[i]["MiddleName"].ToString();
+                    brands.LastName = dt.Rows[i]["LastName"].ToString();
+                    brands.Image = dt.Rows[i]["Image"].ToString();
+                    brands.Description = dt.Rows[i]["Description"].ToString();
+                    brands.TwitterURL = dt.Rows[i]["TwitterURL"].ToString();
+                    brands.InstagramURL = dt.Rows[i]["InstagramURL"].ToString();
+                    list.Add(brands);
+                }
+                await con.OpenAsync();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<Team> Team(Team team)
+        {
+            try
+            {
+                GetConnection(out cmd, out con);
+                await con.OpenAsync();
+                cmd.Parameters.AddWithValue("ID", team.ID);
+                cmd.Parameters.AddWithValue("Title", team.Title);
+                cmd.Parameters.AddWithValue("FirstName", team.FirstName);
+                cmd.Parameters.AddWithValue("MiddleName", team.MiddleName);
+                cmd.Parameters.AddWithValue("LastName", team.LastName);
+                cmd.Parameters.AddWithValue("Image", team.Image);
+                cmd.Parameters.AddWithValue("TwitterUrl", team.TwitterURL);
+                cmd.Parameters.AddWithValue("InstagramUrl", team.InstagramURL);
+                cmd.Parameters.AddWithValue("Description", team.Description);
+                cmd.Parameters.AddWithValue("QueryType", team.ID == 0 ? "ADD_TEAM" : "UPDATE_TEAM");
+                cmd.ExecuteNonQuery();
+                return team;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<int?> DelTeam(int? id)
+        {
+            try
+            {
+                GetConnection(out cmd, out con);
+                await con.OpenAsync();
+                cmd.Parameters.AddWithValue("ID", id);
+                cmd.Parameters.AddWithValue("QueryType", "DELETE_TEAM");
                 cmd.ExecuteNonQuery();
                 return id;
             }
@@ -613,5 +755,6 @@ namespace Beauty.Admin
 
         }
         #endregion
+
     }
 }
