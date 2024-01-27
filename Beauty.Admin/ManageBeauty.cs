@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Xml.Linq;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace Beauty.Admin
@@ -608,7 +609,7 @@ namespace Beauty.Admin
         }
         #endregion
 
-        #region--------Brands---------
+        #region--------Team---------
         public async Task<IEnumerable<Team>> Team(int? id)
         {
             try
@@ -622,17 +623,18 @@ namespace Beauty.Admin
                 dt = ds.Tables[0];
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    Team brands = new Team();
-                    brands.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
-                    brands.Title = dt.Rows[i]["Title"].ToString();
-                    brands.FirstName = dt.Rows[i]["FirstName"].ToString();
-                    brands.MiddleName = dt.Rows[i]["MiddleName"].ToString();
-                    brands.LastName = dt.Rows[i]["LastName"].ToString();
-                    brands.Image = dt.Rows[i]["Image"].ToString();
-                    brands.Description = dt.Rows[i]["Description"].ToString();
-                    brands.TwitterURL = dt.Rows[i]["TwitterURL"].ToString();
-                    brands.InstagramURL = dt.Rows[i]["InstagramURL"].ToString();
-                    list.Add(brands);
+                    Team team = new Team();
+                    team.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
+                    team.UserName = dt.Rows[i]["UserName"].ToString();
+                    team.Title = dt.Rows[i]["Title"].ToString();
+                    team.FirstName = dt.Rows[i]["FirstName"].ToString();
+                    team.MiddleName = dt.Rows[i]["MiddleName"].ToString();
+                    team.LastName = dt.Rows[i]["LastName"].ToString();
+                    team.Image = dt.Rows[i]["Image"].ToString();
+                    team.Description = dt.Rows[i]["Description"].ToString();
+                    team.TwitterURL = dt.Rows[i]["TwitterURL"].ToString();
+                    team.InstagramURL = dt.Rows[i]["InstagramURL"].ToString();
+                    list.Add(team);
                 }
                 await con.OpenAsync();
                 return list;

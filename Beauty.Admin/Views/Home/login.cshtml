@@ -1,0 +1,61 @@
+﻿<script src="~/home.js/login.js" asp-append-version="true"></script>
+@{
+    Layout = "~/views/shared/_blank_layout.cshtml";
+}
+<div>
+    <div class="auth-page-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="text-center mt-sm-5 text-white-50">
+                        <div>
+                            <a href="index.html" class="d-inline-block auth-logo load"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6 col-xl-5">
+                    <div class="card mt-4">
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <img width="120" class="rounded" src="~/beauty.png" />
+                            </div>
+                            <div class="text-center">
+                            </div>
+                            <div class="p-2">
+                                 <form onsubmit="return Login()">
+                                        <div class="mb-3">
+                                        <label for="Email" class="form-label">Email</label><span class="text-danger">*</span>
+                                        <input type="text" class="form-control" id="Email" name="Email" required placeholder="Enter username">
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="float-end">
+                                                <a href="#" class="text-muted load">Forgot password?</a>
+                                            </div>
+                                                <label class="form-label" for="Password">Password</label><span class="text-danger">*</span>
+                                                <div class="position-relative auth-pass-inputgroup mb-3">
+                                                    <input type="password" class="form-control pe-5 password-input" placeholder="Enter password" id="Password" name="Password" aria-describedby="passwordInput" required>
+                                                </div>
+                                        </div>
+                                        <div>
+                                            <label class="form-check-label" for="Remember">Remember me</label>
+                                            <input  type="checkbox" value="0" id="Remember" name="Remember">
+                                        </div>
+
+                                        <div class="mt-4 text-end">
+                                            <button class="btn btn-secondary w-45  loader" type="submit">Log In</button>
+                                        </div>
+                                    </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <p class="mb-0">Don't have an account ? <a href="#" class="fw-semibold load text-primary load text-decoration-underline"> Signup </a> </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

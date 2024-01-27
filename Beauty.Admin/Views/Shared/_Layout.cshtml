@@ -1,24 +1,32 @@
-﻿<!DOCTYPE html>
+﻿@using Beauty.Admin.Models.Helpher
+@{
+    var currentUrl = $"{Context.Request.Scheme}://{Context.Request.Host}";
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]  Beauty.Admin</title>
+    <script src="~/js/jquery-3.6.4.min.js" asp-append-version="true"></script>
     <link rel="shortcut icon" href="~/favicon.png" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/jquery.dataTables.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Beauty.Admin.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/all.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/font-awesome.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
+   </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img width="120" class="rounded" src="data:image/png;base64,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" />
+                    <img width="120" class="rounded" src="~/beauty.png" />
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -27,59 +35,32 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-white btn" asp-area="" asp-controller="Beauty" asp-action="BeautyMakeup" style="background-color:#ee4f48;height:44px">
+                            <a class="nav-link text-white btn" asp-area="" asp-controller="beauty" asp-action="beautymakeup" style="background-color:#ee4f48;height:44px">
                                 <i class="fa fa-paint-brush" aria-hidden="true" style="font-size: 28px; color:white;"></i> <span>Maekup</span>
                             </a>
                         </li>
-                       @*  <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li> *@
                     </ul>
                 </div>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                        <div></div>
+                    <div></div>
                     <div class="profile">
                             <div class="user">
-                                <p>probablykat66</p>
+                             <p>@SessionManager.UserName</p>
                             </div>
                             <div class="img-box">
-                                <img src="https://i.postimg.cc/BvNYhMHS/user-img.jpg" alt="some user image">
+                            <img src="@currentUrl/Content/Image/@SessionManager.Image" alt="some user image">
                             </div>
                         </div>
                     <div class="menu" style="z-index: 99;">
                             <ul>
                                 <li><a href="/home/profile"><i class="ph-bold ph-user"></i>Profile</a></li>
-                                <li><a href="#"><i class="ph-bold ph-envelope-simple"></i>Inbox</a></li>
-                                <li><a href="#"><i class="ph-bold ph-gear-six"></i>Settings</a></li>
-                                <li><a href="#"><i class="ph-bold ph-question"></i>Help</a></li>
-                                <li><a href="#"><i class="ph-bold ph-sign-out"></i>Sign Out</a></li>
+                                <li><a href="/home/logout"><i class="ph-bold ph-sign-out"></i>Log Out</a></li>
                             </ul>
                         </div>
                 </div>
             </div>
         </nav>
     </header>
-    <!-- Modal HTML -->
-    <div id="myModal" class="modal fade">
-        <div class="modal-dialog modal-confirm">
-            <div class="modal-content">
-                <div class="modal-header flex-column">
-                    <div class="icon-box">
-                        <i class="material-icons">&#xE5CD;</i>
-                    </div>
-                    <h4 class="modal-title w-100">Are you sure?</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <p>Do you really want to delete these records? This process cannot be undone.</p>
-                </div>
-                <div class="modal-footer justify-content-center">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger">Delete</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="px-2" style="overflow:hidden">
         <main role="main" class="pb-3">
             <div class="row">
@@ -87,18 +68,15 @@
                     <div class="shadow-lg p-1 rounded" style="background-color:#ee4f48;height:min-content">
                         <i class=""></i>
                         <ul class="list-group">
-                            @* <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenHome()" href="#"><i class="fa fa-home" style="font-size:28px;color:white"></i>    Home </a></li> *@
-                            <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenClient()" href="#"><i class="fas fa-users" style="font-size:28px;color:white"></i>    Clients </a></li>
-                            <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenAbout()" href="#"><i class="fa fa-info-circle" style="font-size:28px;color:white"></i>    About </a></li>
-                            <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenService()" href="#"><i class="fa fa-wrench" aria-hidden="true" style="font-size:28px;color:white"></i>  Services</a></li>
-                            <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenNews()" href="#"><i class="fa fa-newspaper-o" style="font-size: 28px; color: white;"></i>  News</a></li>
-                            <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenContact()" href="#"><i class="fa fa-address-book" aria-hidden="true" style="font-size: 28px; color: white;"></i> Contact</a></li>
-                            <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenPrice()" href="#"><i class="fa fa-money" aria-hidden="true" style="font-size: 28px; color: white;"></i> Price</a></li>
-                            <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenBrands()" href="#"><i class="fa fa-flag" style="font-size: 28px; color: white;"></i> Brands</a></li>
-                            <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenBanner()" href="#"><i class="fa fa-picture-o" aria-hidden="true" style="font-size: 28px; color: white;"></i> Banner</a></li>
-                            <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenTeam()" href="#"><i class="fa fa-group" aria-hidden="true" style="font-size: 28px; color: white;"></i> Team</a></li>
-                           @*  <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenClientOpen()" href="#"><i class="fa fa-address-book" aria-hidden="true" style="font-size: 28px; color: white;"></i> ClientOpen</a></li>
-                            <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="OpenClientBrands()" href="#"><i class="fa fa-address-book" aria-hidden="true" style="font-size: 28px; color: white;"></i> Brands</a></li> *@
+                            <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="Open('beautyclientopen')" href="#"><i class="fas fa-user" style="font-size:28px;color:white"></i>    Clients </a></li>
+                            <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="Open('beautyaboutus')" href="#"><i class="fa fa-info-circle" style="font-size:28px;color:white"></i>    About </a></li>
+                            <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="Open('beautyservice')" href="#"><i class="fa fa-wrench" aria-hidden="true" style="font-size:28px;color:white"></i>  Services</a></li>
+                            <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="Open('beautynews')" href="#"><i class="fa fa-newspaper-o" style="font-size: 28px; color: white;"></i>  News</a></li>
+                            <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="Open('beautycontactus')" href="#"><i class="fa fa-address-book" aria-hidden="true" style="font-size: 28px; color: white;"></i> Contact</a></li>
+                            <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="Open('beautyprice')" href="#"><i class="fa fa-money" aria-hidden="true" style="font-size: 28px; color: white;"></i> Price</a></li>
+                            <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="Open('beautybrand')" href="#"><i class="fa fa-flag" style="font-size: 28px; color: white;"></i> Brands</a></li>
+                            <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="Open('beautybanner')" href="#"><i class="fa fa-picture-o" aria-hidden="true" style="font-size: 28px; color: white;"></i> Banner</a></li>
+                            <li class="list-group-item" style="background-color:#ee4f48;color:white"><a onclick="Open('beautyteam')" href="#"><i class="fa fa-group" aria-hidden="true" style="font-size: 28px; color: white;"></i> Team</a></li>
                           </ul>
                     </div>
                 </div>
@@ -114,57 +92,30 @@
             &copy; 2023 - Beauty.Admin - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script src="~/js/jquery-3.7.0.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery-3.6.4.min.js" asp-append-version="true"></script>
     <script src="~/js/jquery.dataTables.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/bootstrap.min.js" asp-append-version="true"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
     <script>
         $(document).ready(function () {
             $('.DataTable').DataTable({
+                "pageLength": 7,
                 "paging": true,
-                "pageLength": 6,
                 "lengthChange": false,
             });
         });
         let profile = document.querySelector('.profile');
         let menu = document.querySelector('.menu');
-
         profile.onclick = function () {
             menu.classList.toggle('active');
         }
-        function OpenAbout() {
-            window.location.href = "/beauty/beautyaboutus";
+        function Open(page) {
+            debugger
+            window.location.href = "/beauty/"+page;
         }
-        function OpenService() {
-            window.location.href = "/beauty/beautyservice";
-        }
-        function OpenContact() {
-            window.location.href = "/beauty/beautycontactus";
-        }
-        function OpenNews() {
-            window.location.href = "/beauty/beautynews";
-        }
-        function OpenPrice() {
-            window.location.href = "/beauty/beautyprice";
-        } 
-        function OpenMakeup() {
-            window.location.href = "/beauty/beautymakeup";
-        }
-        function OpenBanner() {
-            window.location.href = "/beauty/beautybanner";
-        }
-        function OpenTeam() {
-            window.location.href = "/beauty/beautyteam";
-        }
-        function OpenClient() {
-            window.location.href = "/beauty/beautyclientopen";
-        }
-        function OpenBrands() {
-            window.location.href = "/beauty/beautybrand";
-        }
-       
     </script>
 </body>
 </html>

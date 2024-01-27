@@ -11,7 +11,7 @@ var url = window.location.origin;
                 $.each(result, function (key, item) {
                     html += '<tr>';
                     html += `<td>${key + 1}</td>`;
-                    html += `<td>${item.Title}${item.FirstName}${item.MiddleName}${item.LastName} </td>`;
+                    html += `<td>${item.UserName} </td>`;
                     html += `<td>${item.Description}</td>`;
                     //html += `<td>${item.TwitterURL}</td>`;
                     //html += `<td>${item.InstagramURL}</td>`;
