@@ -16,7 +16,7 @@ function Login() {
             } else {
                 window.location.href = '/home/login';
             }
-            alert(result.message[0].operationMessage);
+            alert(result.message[0].operationMessage == undefined ? result.message : result.message[0].operationMessage );
         },
         error: function (errormessage) {
             alert(errormessage.responseText);

@@ -11,9 +11,10 @@ using Microsoft.AspNetCore.Hosting;
 using System.Drawing.Drawing2D;
 using Microsoft.AspNetCore.Authorization;
 
+
 namespace Beauty.Admin.Controllers
 {
-    
+    [Authorize]
     [Route("Beauty")]
     public class BeautyController : Controller
     {
@@ -29,7 +30,8 @@ namespace Beauty.Admin.Controllers
         #endregion
 
         #region---------Aboutus---------
-      
+
+        
         [Route("BeautyAboutus")]
         public IActionResult Aboutus()
         {

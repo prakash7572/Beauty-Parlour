@@ -77,6 +77,7 @@ namespace Beauty.Admin
                              SessionManager.Title = dt.Rows[i]["Title"].ToString();
                              SessionManager.Phone = dt.Rows[i]["Phone"].ToString();
                              SessionManager.FirstName = dt.Rows[i]["FirstName"].ToString();
+                             SessionManager.MiddleName = dt.Rows[i]["MiddleName"].ToString();
                              SessionManager.LastName = dt.Rows[i]["LastName"].ToString();
                              SessionManager.Image = dt.Rows[i]["Image"].ToString();
                              SessionManager.Email = dt.Rows[i]["Email"].ToString();
@@ -96,6 +97,36 @@ namespace Beauty.Admin
                     return list;
                 }
                 return list;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        #endregion
+
+        #region-----Profile---------
+        public async Task<Profile> Profile(Profile profile)
+        {
+            try
+            {
+                GetConnection(out cmd, out con);
+                await con.OpenAsync();
+                cmd.Parameters.AddWithValue("ID", profile.UserId);
+                cmd.Parameters.AddWithValue("Title", profile.Title);
+                cmd.Parameters.AddWithValue("Image", profile.Image);
+                cmd.Parameters.AddWithValue("Phone", profile.Phone);
+                cmd.Parameters.AddWithValue("FirstName", profile.FirstName);
+                cmd.Parameters.AddWithValue("LastName", profile.LastName);
+                cmd.Parameters.AddWithValue("UserName", profile.UserName);
+                cmd.Parameters.AddWithValue("Email", profile.Email);
+                cmd.Parameters.AddWithValue("MiddleName", profile.MiddleName);
+                cmd.Parameters.AddWithValue("QueryType", "UPDATE_PROFILE");
+                cmd.ExecuteNonQuery();
+                return profile;
+
             }
             catch (Exception ex)
             {
