@@ -1,4 +1,8 @@
-﻿
+﻿$(document).ready(function () {
+    $(".cancel").on("click", function () {
+        window.location.href ="/home/index"
+    });
+})
 function PorfileSumbit() {
 
     var data = new FormData();
@@ -24,7 +28,7 @@ function PorfileSumbit() {
         contentType: false,
         processData: false,
         success: function (result) {
-            alert(result.message[0].operationMessage == undefined ? result.message : result.message[0].operationMessage );
+            alert(result.message[0].operationMessage);
         },
         error: function (errormessage) {
             alert(errormessage.responseText);

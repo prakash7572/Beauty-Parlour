@@ -79,8 +79,8 @@ namespace Beauty.Admin.Controllers
                         }
 
                     }
-                    await _manageAccount.Profile(profile);
-                    return Ok(profile.UserId == 0 ? new { Message = "Profile Added succesfully !!!" } : new { Message = "Profile Updated succesfully !!!" });
+                   var data = await _manageAccount.Profile(profile);
+                    return Ok(data);
 
                 }
                 else
@@ -133,6 +133,21 @@ namespace Beauty.Admin.Controllers
             }
             catch (Exception ex)
             {
+                return Ok(new { Message = "Technical Error !!" });
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePassword change)
+        {
+            try
+            {
+                var data = await _manageAccount.ChangePassword(change);
+                return Ok(new { Message = data });
+                
+            }
+            catch (Exception ex)
+            {
+
                 return Ok(new { Message = "Technical Error !!" });
             }
         }

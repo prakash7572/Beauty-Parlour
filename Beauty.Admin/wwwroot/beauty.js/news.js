@@ -14,7 +14,7 @@ function loadData() {
                 html += `<td>${item.SubTitle}</td>`;
                 html += `<td>${item.Description}</td>`;
                 html += `<td><img src="${url}/Content/Image/${item.Image}" widht="40" height="30" /></td>`;
-                html += `<td>${item.MakeupType == true ? `<i class="fa fa-check-square-o" ${style} ></i>` : `<i class="fa fa-square-o" ${style}></i>` }</td>`;
+                html += `<td>${item.MakeupType == true ? `<i class="fas fa-check-square" ${style} ></i>` : `<i class="fas fa-square-full" ${style}></i>` }</td>`;
                 html += `<td>
                           <a href="#" data-toggle="modal" data-target="#rightSideModal" onclick="GetNews(${item.ID})"><i class="fa fa-edit" ${style}></i></a>
                           <a href="#" onclick="DelNews(${item.ID})"><i class="fa fa-trash" ${style}></i></a>
