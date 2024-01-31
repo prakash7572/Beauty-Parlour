@@ -17,6 +17,10 @@ namespace Beauty.Controllers
         {
             return View();
         }
+        public IActionResult Home() { 
+        
+        return View();
+        }
         public IActionResult About()
         {
             return View();
@@ -27,6 +31,14 @@ namespace Beauty.Controllers
         }
         public IActionResult Blog()
         {
+            return View();
+        }
+        public IActionResult ServicesPage() {
+
+            return View("~/views/home/servicepage.cshtml");
+        }
+        public IActionResult Post() {
+
             return View();
         }
         public IActionResult Privacy()
