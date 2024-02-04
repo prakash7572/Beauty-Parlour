@@ -14,8 +14,9 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Beauty.Admin.Controllers
 {
-    [Authorize]
     [Route("Beauty")]
+    [Authorize]
+
     public class BeautyController : Controller
     {
         #region---Reference-----
@@ -37,8 +38,8 @@ namespace Beauty.Admin.Controllers
         {
             return View("/views/beauty/aboutus.cshtml");
         }
+        [Route("Aboutus/{id?}")]
         [HttpGet]
-        [Route("Aboutus")]
         public async Task<IActionResult> AboutUs(int id = 0)
         {
             try

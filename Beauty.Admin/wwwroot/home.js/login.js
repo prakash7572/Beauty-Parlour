@@ -12,14 +12,16 @@ function Login() {
         processData: false,
         success: function (result) {
             if (result.message[0].statusCode == "SUCCESS") {
-                window.location.href = '/home/index';
+                toastr.success(result.message[0].operationMessage, 'Success');
+                setInterval(function () { window.location.href = '/home/index'; }, 1000);
+                
             } else {
-                window.location.href = '/home/login';
+                toastr.error(result.message[0].operationMessage, 'Error');
+                $('#Email,#Password').val('');
             }
-            alert(result.message[0].operationMessage == undefined ? result.message : result.message[0].operationMessage );
         },
         error: function (errormessage) {
-            alert(errormessage.responseText);
+            toaster.error(errormessage.responseText);
         }
     });
     return false;

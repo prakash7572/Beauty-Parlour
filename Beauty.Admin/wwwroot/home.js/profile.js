@@ -28,10 +28,10 @@ function PorfileSumbit() {
         contentType: false,
         processData: false,
         success: function (result) {
-            alert(result.message[0].operationMessage);
+            toastr.success(result.message[0].operationMessage, 'Success');
         },
         error: function (errormessage) {
-            alert(errormessage.responseText);
+            toaster.error(errormessage.responseText);
         }
     });
     return false;

@@ -17,14 +17,14 @@ var url = window.location.origin;
                     html += `<td><img src="${url}/Content/Image/${item.Image}" widht="40" height="30" /></td>`;
                     html += `<td>
                                  <a href="#" data-toggle="modal" data-target="#rightSideModal" onclick="GetAbout(${item.ID})"><i class="fa fa-edit"></i></a>
-                                 <a href="#" onclick="delAbout(${item.ID})"><i class="fa fa-trash"></i></a>
+                                 <a href="#" onclick="delAbout(${item.ID})" id="showConfirmToastBtn"><i class="fa fa-trash"></i></a>
                                  </td>`;
                     html += '</tr>';
                 });
                 $('#list').html(html);
             },
             error: function (errormessage) {
-                alert(errormessage.responseText);
+                toastr.error(errormessage.responseText, 'Error');
             }
         });
     }
@@ -48,7 +48,7 @@ function ClearForm() {
                 $("#ID").val(result[0].ID);
             },
             error: function (errormessage) {
-                alert(errormessage.responseText);
+                toastr.error(errormessage.responseText, 'Error');
             }
         });
     }
@@ -74,11 +74,13 @@ function submitAbout() {
            contentType: false,
            processData: false,
            success: function (result) {
-               window.location.href = '/beauty/beautyaboutus';
-               alert(result.message);
+               toastr.success(result.message, 'Success');
+               toastr.error(result.message, 'Error');
+               $('[data-dismiss="modal"]').trigger('click');
+               loadData();
            },
            error: function (errormessage) {
-               alert(errormessage.responseText);
+               toastr.error(errormessage.responseText, 'Error');
            }
        });
     return false;
@@ -95,11 +97,11 @@ function submitAbout() {
                 contentType: "application/json;charset=UTF-8",
                 dataType: "json",
                 success: function (result) {
-                    alert(result.message);
+                    toastr.success(result.message, 'Success');
                     loadData();
                 },
                 error: function (errormessage) {
-                    alert(errormessage.responseText);
+                    toastr.error(errormessage.responseText, 'Error');
                 }
             });
         };

@@ -23,7 +23,7 @@ var url = window.location.origin;
                 $('#bannerlist').html(html);
             },
             error: function (errormessage) {
-                alert(errormessage.responseText);
+                toaster.error(errormessage.responseText);
             }
         });
     }
@@ -44,7 +44,7 @@ function GetBanner(id) {
                 $("#ID").val(result[0].ID);
             },
             error: function (errormessage) {
-                alert(errormessage.responseText);
+                toaster.error(errormessage.responseText);
             }
         });
     }
@@ -67,11 +67,12 @@ function SubmitBanner() {
             contentType: false,
             processData: false,
             success: function (result) {
-                alert(result.message);
-                window.location.href = '/beauty/beautybanner';
+                toastr.success(result.message, 'Success');
+                $('[data-dismiss="modal"]').trigger('click');
+                loadData();
             },
             error: function (errormessage) {
-                alert(errormessage.responseText);
+                toaster.error(errormessage.responseText);
             }
         });
         return false;
@@ -86,11 +87,11 @@ function DelBanner(id) {
                 contentType: "application/json;charset=UTF-8",
                 dataType: "json",
                 success: function (result) {
-                    alert(result.message);
+                    toastr.success(result.message, 'Success');
                     loadData();
                 },
                 error: function (errormessage) {
-                    alert(errormessage.responseText);
+                    toaster.error(errormessage.responseText);
                 }
             });
         };

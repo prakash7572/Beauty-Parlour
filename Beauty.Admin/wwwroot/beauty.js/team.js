@@ -25,7 +25,7 @@ var url = window.location.origin;
                 $('#list').html(html);
             },
             error: function (errormessage) {
-                alert(errormessage.responseText);
+                toaster.error(errormessage.responseText);
             }
         });
     }
@@ -53,7 +53,7 @@ function GetTeam(id) {
                 $("#ID").val(result[0].ID);
             },
             error: function (errormessage) {
-                alert(errormessage.responseText);
+                toaster.error(errormessage.responseText);
             }
         });
     }
@@ -83,11 +83,12 @@ function submitAbout() {
            contentType: false,
            processData: false,
            success: function (result) {
-               window.location.href = '/beauty/beautyteam';
-               alert(result.message);
+               toastr.success(result.message, 'Success');
+               $('[data-dismiss="modal"]').trigger('click');
+               loadData();
            },
            error: function (errormessage) {
-               alert(errormessage.responseText);
+               toaster.error(errormessage.responseText);
            }
        });
     return false;
@@ -104,11 +105,12 @@ function DelTeam(id) {
                 contentType: "application/json;charset=UTF-8",
                 dataType: "json",
                 success: function (result) {
-                    alert(result.message);
+                    toastr.success(result.message, 'Success');
+                    $('[data-dismiss="modal"]').trigger('click');
                     loadData();
                 },
                 error: function (errormessage) {
-                    alert(errormessage.responseText);
+                    toaster.error(errormessage.responseText);
                 }
             });
         };

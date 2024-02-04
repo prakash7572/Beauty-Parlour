@@ -24,7 +24,7 @@ function loadData() {
             $('#newslist').html(html);
         },
         error: function (errormessage) {
-            alert(errormessage.responseText);
+            toaster.error(errormessage.responseText);
         }
     });
 }
@@ -46,7 +46,7 @@ function GetNews(id) {
             if (result[0].MakeupType == true ? $("#MakeupType").prop("checked", true) : $("#MakeupType").prop("cheked", false));
         },
         error: function (errormessage) {
-            alert(errormessage.responseText);
+            toaster.error(errormessage.responseText);
         }
     });
 }
@@ -74,39 +74,16 @@ function SubmitNews() {
         contentType: false,
         processData: false,
         success: function (result) {
-            alert(result.message);
-            window.location.href = '/beauty/beautynews';
+            toastr.success(result.message, 'Success');
+            $('[data-dismiss="modal"]').trigger('click');
+            loadData();
         },
         error: function (errormessage) {
-            alert(errormessage.responseText);
+            toaster.error(errormessage.responseText);
         }
     });
     return false;
 }
-//function submitNews() {
-//    var news = {
-//        ID: $('#ID').val(),
-//        SubTitle: $('#SubTitle').val(),
-//        Image: $('#Image').val(),
-//        Description: $('#Description').val(),
-//        MakeupType: $("#MakeupType").prop("cheked", true) ? 1 : 0,
-//    };
-//    $.ajax({
-//        url: "/beauty/news",
-//        data: JSON.stringify(news),
-//        type: "POST",
-//        contentType: "application/json",
-//        dataType: "json",
-//        success: function (result) {
-//            alert(result.message);
-//            window.location.href = '/beauty/beautynews';
-//        },
-//        error: function (errormessage) {
-//            alert(errormessage.responseText);
-//        }
-//    });
-//    return false;
-//}
 function DelNews(id) {
     if (!confirm("Are you sure you want to delete this Record?")) {
         return false;
@@ -117,11 +94,11 @@ function DelNews(id) {
             contentType: "application/json;charset=UTF-8",
             dataType: "json",
             success: function (result) {
-                alert(result.message);
+                toastr.success(result.message, 'Success');
                 loadData();
             },
             error: function (errormessage) {
-                alert(errormessage.responseText);
+                toaster.error(errormessage.responseText);
             }
         });
     };

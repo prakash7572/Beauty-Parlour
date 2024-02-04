@@ -23,6 +23,7 @@
    </head>
 <body>
     <header>
+        <link rel="stylesheet" href="~/css/toastr.min.css" asp-append-version="true" />
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
@@ -97,6 +98,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/js/toastr.min.js" asp-append-version="true"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
     <script>
@@ -106,6 +108,7 @@
                 "paging": true,
                 "lengthChange": false,
             });
+
         });
         let profile = document.querySelector('.profile');
         let menu = document.querySelector('.menu');
@@ -113,7 +116,6 @@
             menu.classList.toggle('active');
         }
         function Open(page) {
-            debugger
             window.location.href = "/beauty/"+page;
         }
     </script>

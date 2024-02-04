@@ -22,7 +22,7 @@ var url = window.location.origin;
                 $('#list').html(html);
             },
             error: function (errormessage) {
-                alert(errormessage.responseText);
+                toaster.error(errormessage.responseText);
             }
         });
     }
@@ -44,7 +44,7 @@ function GetBrand(id) {
                 $("#ID").val(result[0].ID);
             },
             error: function (errormessage) {
-                alert(errormessage.responseText);
+                toaster.error(errormessage.responseText);
             }
         });
     }
@@ -68,11 +68,12 @@ function SubmitBrand() {
            contentType: false,
            processData: false,
            success: function (result) {
-               window.location.href = '/beauty/beautybrand';
-               alert(result.message);
+               toastr.success(result.message, 'Success');
+               $('[data-dismiss="modal"]').trigger('click');
+               loadData();
            },
            error: function (errormessage) {
-               alert(errormessage.responseText);
+               toaster.error(errormessage.responseText);
            }
        });
     return false;
@@ -87,7 +88,7 @@ function SubmitBrand() {
                 contentType: "application/json;charset=UTF-8",
                 dataType: "json",
                 success: function (result) {
-                    alert(result.message);
+                    toastr.success(result.message, 'Success');
                     loadData();
                 },
                 error: function (errormessage) {
