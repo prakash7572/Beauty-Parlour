@@ -74,22 +74,23 @@ function submitContact() {
     });
     return false;
 }
+
 function DelContact(id) {
-    if (!confirm("Are you sure you want to delete this Record?")) {
-        return false;
-    } else {
-        $.ajax({
-            url: `/beauty/deletecontactus?id=${id}`,
-            type: "GET",
-            contentType: "application/json;charset=UTF-8",
-            dataType: "json",
-            success: function (result) {
-                toastr.success(result.message, 'Success');
-                loadData();
-            },
-            error: function (errormessage) {
-                toaster.error(errormessage.responseText);
-            }
-        });
-    };
+    showConfirmationDialog("confirmDelete(" + id + ")", "cancelDelete");
+}
+function confirmDelete(id) {
+    $.ajax({
+        url: `/beauty/deletecontactus?id=${id}`,
+        type: "GET",
+        contentType: "application/json;charset=UTF-8",
+        dataType: "json",
+        success: function (result) {
+            toastr.success(result.message, 'Success');
+            loadData();
+        },
+        error: function (errormessage) {
+            toaster.error(errormessage.responseText);
+        }
+    });
+
 }

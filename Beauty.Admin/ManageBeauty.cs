@@ -625,7 +625,6 @@ namespace Beauty.Admin
                 {
                     Team team = new Team();
                     team.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
-                    team.UserName = dt.Rows[i]["UserName"].ToString();
                     team.Title = dt.Rows[i]["Title"].ToString();
                     team.FirstName = dt.Rows[i]["FirstName"].ToString();
                     team.MiddleName = dt.Rows[i]["MiddleName"].ToString();

@@ -1,4 +1,6 @@
-﻿namespace Beauty.Admin.Models.Helpher
+﻿using System;
+
+namespace Beauty.Admin.Models.Helpher
 {
     public class SessionManager
     {
@@ -11,5 +13,12 @@
             public static string? Phone { get; set; }
             public static string? Email { get; set; }
             public static string? Image { get; set; }
+           
+    }
+   
+    public class SessionList
+    {
+        public  string? Category { get; set; }
+        public  int? Count { get; set; }
     }
 }

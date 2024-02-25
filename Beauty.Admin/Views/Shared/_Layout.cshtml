@@ -10,7 +10,7 @@
     <title>@ViewData["Title"]  Beauty.Admin</title>
     <script src="~/js/jquery-3.6.4.min.js" asp-append-version="true"></script>
     <link rel="shortcut icon" href="~/favicon.png" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/jquery.dataTables.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Beauty.Admin.styles.css" asp-append-version="true" />
@@ -23,7 +23,9 @@
    </head>
 <body>
     <header>
+        <script src="~/js/jquery.dataTables.js" asp-append-version="true"></script>
         <link rel="stylesheet" href="~/css/toastr.min.css" asp-append-version="true" />
+
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
@@ -93,7 +95,6 @@
             &copy; 2023 - Beauty.Admin - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script src="~/js/jquery-3.6.4.min.js" asp-append-version="true"></script>
     <script src="~/js/jquery.dataTables.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
@@ -108,8 +109,23 @@
                 "paging": true,
                 "lengthChange": false,
             });
-
         });
+        function showConfirmationDialog(onConfirm, onCancel) {
+            toastr.info('<div> Are you sure you want to delete this Record? </div>\
+                         <div style="text-align: center; margin-top: 10px;">\
+                             <button class="btn btn-danger btn-sm" onclick="' + onConfirm + '">Yes</button>\
+                             <button class="btn btn-secondary btn-sm" onclick="' + onCancel + '">Cancel</button>\
+                         </div>', 'Confirmation', {
+                closeButton: false,
+                progressBar: true,
+                timeOut: 0,
+                extendedTimeOut: 0
+            });
+        }
+        function cancelDelete() {
+            toastr.warning('Delete action canceled!', 'Warning');
+            toastr.clear();
+        }
         let profile = document.querySelector('.profile');
         let menu = document.querySelector('.menu');
         profile.onclick = function () {

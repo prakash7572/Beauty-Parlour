@@ -72,6 +72,7 @@ namespace Beauty.Admin
                         DataSet ds = new DataSet();
                         adt.Fill(ds);
                         DataTable dt = ds.Tables[0];
+                        DataTable dts = ds.Tables[1];
                         for (int i = 0; i < dt.Rows.Count; i++)
                         {
                              SessionManager.UserId  = Convert.ToInt32(dt.Rows[i]["UserId"]);
@@ -83,6 +84,14 @@ namespace Beauty.Admin
                              SessionManager.LastName = dt.Rows[i]["LastName"].ToString();
                              SessionManager.Image = dt.Rows[i]["Image"].ToString();
                              SessionManager.Email = dt.Rows[i]["Email"].ToString();
+                        }
+                        List<SessionList> sessionLists = new List<SessionList>();
+                        for (int i = 0; i < dts.Rows.Count; i++)
+                        {
+                            SessionList session = new SessionList();
+                            session.Category = dts.Rows[i]["Category"].ToString();
+                            session.Count = Convert.ToInt32(dts.Rows[i]["Count"]);
+                            sessionLists.Add(session);
                         }
                     }
                     list.Add(manager);

@@ -14,7 +14,7 @@ function loadData() {
                 html += `<td>${item.SubTitle}</td>`;
                 html += `<td>${item.Description}</td>`;
                 html += `<td><img src="${url}/Content/Image/${item.Image}" widht="40" height="30" /></td>`;
-                html += `<td>${item.MakeupType == true ? `<i class="fas fa-check-square" ${style} ></i>` : `<i class="fas fa-square-full" ${style}></i>` }</td>`;
+                html += `<td>${item.MakeupType == true ? `<i class="fas fa-check-square" ${style} ></i>` : `<i class="fas fa-square-full" ${style}></i>`}</td>`;
                 html += `<td>
                           <a href="#" data-toggle="modal" data-target="#rightSideModal" onclick="GetNews(${item.ID})"><i class="fa fa-edit" ${style}></i></a>
                           <a href="#" onclick="DelNews(${item.ID})"><i class="fa fa-trash" ${style}></i></a>
@@ -39,6 +39,7 @@ function GetNews(id) {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
+            $("#Image").attr("required", false);
             $("#SubTitle").val(result[0].SubTitle);
             $("#Img").val(result[0].Image);
             $("#Description").val(result[0].Description);
@@ -55,7 +56,7 @@ function SubmitNews() {
     var status;
     if ($('#MakeupType').is(":checked")) { status = true; } else { status = false; }
     var data = new FormData();
-    data.append("ID", $('#ID').val());  
+    data.append("ID", $('#ID').val());
     data.append("SubTitle", $('#SubTitle').val());
     data.append("Description", $('#Description').val());
     data.append("MakeupType", status);
@@ -63,8 +64,7 @@ function SubmitNews() {
     let fileInput = $("#Image")[0].files[0];
     if (fileInput) {
         data.append("Image", fileInput);
-    } else
-    {
+    } else {
         data.append("Image", $("#Img").val());
     }
     $.ajax({
@@ -84,22 +84,25 @@ function SubmitNews() {
     });
     return false;
 }
+
 function DelNews(id) {
-    if (!confirm("Are you sure you want to delete this Record?")) {
-        return false;
-    } else {
-        $.ajax({
-            url: `/beauty/deletenews?id=${id}`,
-            type: "GET",
-            contentType: "application/json;charset=UTF-8",
-            dataType: "json",
-            success: function (result) {
-                toastr.success(result.message, 'Success');
-                loadData();
-            },
-            error: function (errormessage) {
-                toaster.error(errormessage.responseText);
-            }
-        });
-    };
+    showConfirmationDialog("confirmDelete(" + id + ")", "cancelDelete");
+}
+
+function confirmDelete(id) {
+
+    $.ajax({
+        url: `/beauty/deletenews?id=${id}`,
+        type: "GET",
+        contentType: "application/json;charset=UTF-8",
+        dataType: "json",
+        success: function (result) {
+            toastr.success(result.message, 'Success');
+            loadData();
+        },
+        error: function (errormessage) {
+            toaster.error(errormessage.responseText);
+        }
+    });
+
 }

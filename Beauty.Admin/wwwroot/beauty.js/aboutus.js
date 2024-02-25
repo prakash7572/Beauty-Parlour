@@ -17,7 +17,7 @@ var url = window.location.origin;
                     html += `<td><img src="${url}/Content/Image/${item.Image}" widht="40" height="30" /></td>`;
                     html += `<td>
                                  <a href="#" data-toggle="modal" data-target="#rightSideModal" onclick="GetAbout(${item.ID})"><i class="fa fa-edit"></i></a>
-                                 <a href="#" onclick="delAbout(${item.ID})" id="showConfirmToastBtn"><i class="fa fa-trash"></i></a>
+                                 <a href="#" onclick="delAbout(${item.ID})"><i class="fa fa-trash"></i></a>
                                  </td>`;
                     html += '</tr>';
                 });
@@ -75,7 +75,6 @@ function submitAbout() {
            processData: false,
            success: function (result) {
                toastr.success(result.message, 'Success');
-               toastr.error(result.message, 'Error');
                $('[data-dismiss="modal"]').trigger('click');
                loadData();
            },
@@ -85,26 +84,23 @@ function submitAbout() {
        });
     return false;
 }
-
-
-    function delAbout(id) {
-        if (!confirm("Are you sure you want to delete this Record?")) {
-            return false;
-        } else {
-            $.ajax({
-                url: `/beauty/deleteabout?id=${id}`,
-                type: "GET",
-                contentType: "application/json;charset=UTF-8",
-                dataType: "json",
-                success: function (result) {
-                    toastr.success(result.message, 'Success');
-                    loadData();
-                },
-                error: function (errormessage) {
-                    toastr.error(errormessage.responseText, 'Error');
-                }
-            });
-        };
+function delAbout(id) {
+    showConfirmationDialog("confirmDelete(" + id + ")", "cancelDelete");
 }
-
+function confirmDelete(id) {
+    $.ajax({
+        url: `/beauty/deleteabout?id=${id}`,
+        type: "GET",
+        contentType: "application/json;charset=UTF-8",
+        dataType: "json",
+        success: function (result) {
+            toastr.success(result.message, 'Success');
+            loadData();
+        },
+        error: function (errormessage) {
+            toastr.error(errormessage.responseText, 'Error');
+        }
+    });
+}
+    
 //...............End Aboutus.................//
