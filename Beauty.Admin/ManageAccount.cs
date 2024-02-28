@@ -48,7 +48,7 @@ namespace Beauty.Admin
 
         #region--------Login---------   
         public async Task<IEnumerable<dynamic>> Login(Login log)
-          {
+        { 
             try
             {
                 List<dynamic> list = new List<dynamic>();
