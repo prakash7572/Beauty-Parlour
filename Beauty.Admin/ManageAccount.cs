@@ -220,7 +220,5 @@ namespace Beauty.Admin
 
         #endregion
 
-
-
     }
 }
